@@ -1,0 +1,438 @@
+{% extends "admin/base.html" %}
+{% block title1 %}Evenimente{% endblock %}
+{% block title %}Evenimente{% endblock %}
+{% import 'admin/modal.html' as modal %}
+
+{% block style %}
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet"></link>
+
+
+    <style>
+        tr[id] {
+            cursor: pointer;
+        }
+
+        .ui-widget.ui-widget-content.ui-autocomplete {
+            z-index: 1111;
+        }
+
+        thead input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+
+        #table_events {
+            width: 100%;
+            table-layout: fixed;
+            /* word-break: break-all !important;
+            white-space: normal !important; */
+        }
+
+        #table_events tbody td {
+            word-break: break-all;
+            vertical-align: top;
+            white-space: normal !important;
+        }
+
+        #table_events thead th {
+            word-break: normal !important;
+            vertical-align: top;
+            white-space: normal !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    <button class="btn btn-primary" id="open-modal-button" type="button">Eveniment Nou +</button>
+
+    <div class="row my-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table id="table_events"
+                           class="table-striped dataTable no-footer nowrap"
+                           style="font-size: 12px; text-align: center; overflow: auto;">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>date</th>
+                            <th>time</th>
+                            <th>event_type</th>
+                            <th>location</th>
+                            <th>dancers</th>
+                            <th>mires</th>
+                            <th>contacts</th>
+                            <th>details</th>
+                            <th>photo_video</th>
+                            <th>music</th>
+                            <th>moderators</th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        const openModalButton = document.getElementById('open-modal-button');
+        var selectDancers;
+
+        openModalButton.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Adauga Eveniment',
+                html: `{{ modal.create_event() }}`,
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'Adauga',
+                cancelButtonText: 'Anuleaza',
+                denyButtonText: 'Deschide pagina',
+
+                focusConfirm: false,
+                allowOutsideClick: false,
+                width: 1000,
+                preConfirm: () => {
+                    const date = document.getElementById('date').value;
+                    const time = document.getElementById('time').value;
+                    const tip_eveniment = document.getElementById('tip_eveniment').value;
+                    const location = document.getElementById('location').value;
+                    const street = document.getElementById('street').value;
+                    const location_details = document.getElementById('location_details').value;
+                    const dancers = selectDancers.getSelected().toString()
+                    const miri = document.getElementById('miri').value;
+                    const contacte_miri = document.getElementById('contacte_miri').value;
+                    const detalii_nunta = document.getElementById('detalii_nunta').value;
+
+                    $.ajax({
+                        url: '/adaugaEveniment',
+                        method: 'POST',
+                        data: {
+                            date,
+                            time,
+                            tip_eveniment,
+                            location,
+                            street,
+                            location_details,
+                            dancers,
+                            miri,
+                            contacte_miri,
+                            detalii_nunta
+                        },
+                        success: function (response) {
+                            Swal.fire('Eveniment adaugat cu succes!', '', 'success');
+                        },
+                        error: function (error) {
+                            console.error('Eroare:', error);
+                            Swal.fire('Eroare', 'A fost depistata o eroare in timpul adaugarii evenimentului.', 'error');
+                        }
+                    });
+                }
+            }).then((result) => {
+                if (result.isDenied) {
+                    window.open("https://www.educative.io/", "_blank");
+                }
+            });
+            $(function () {
+                var availableTags = [
+                    "John",
+                    "Jane",
+                    "Janos",
+                    "Lisa",
+                    "Rita"
+                ];
+                $("#name").autocomplete({
+                    source: availableTags,
+                    messages: {
+                        noResults: '',
+                        results: function () {
+                        }
+                    }
+                });
+            });
+            $(function () {
+                selectDancers = new SlimSelect({
+                    select: '#dancers'
+                })
+            });
+        });
+
+
+    </script>
+
+    <script>
+        function table_events() {
+
+
+            $('#table_events thead tr').clone(true).appendTo('#table_events thead');
+
+            //Setup - add a text input to each footer cell
+            $('#table_events thead tr:eq(1) th').each(function (i) {
+                if (i >= 1) $(this).html('<input type="text" style="border-color: black; border-radius: 3px;"/>');
+                else $(this).html('');
+
+                $('input', this).on('keyup change', function () {
+
+                    if ($("#table_events").DataTable().column(i).search() !== this.value) {
+                        $("#table_events").DataTable().column(i).search(this.value).draw();
+                    }
+
+                });
+            });
+
+            table_events = $("#table_events").DataTable({
+                responsive: false,
+                "ajax": {
+                    "url": "getEvents",
+                    "dataType": "json",
+                    "dataSrc": "",
+                    "contentType": "application/json",
+                    "error": function (error) {
+                        console.log(error);
+                    }
+                },
+                "language": {
+                    searchPlaceholder: "Cauta in tabela..."
+                },
+                'dom': ' <"c8tableBody"lft><"bottom"ip><"clear">',
+                "pageLength": 25,
+                "aLengthMenu": [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "Tutti"]
+                ],
+                "orderCellsTop": true,
+                "fixedHeader": true,
+                "bAutoWidth": false,
+                select: {
+                    selector: "td:not(:first-child)",
+                    style: "os"
+                },
+                "initComplete": function (settings, json) {
+                    //$("#loader").fadeOut(1500);
+                    //console.log(json);
+                    if ($("#table_events tbody tr").length === 0) {
+                        if ($.fn.DataTable.isDataTable("#table_events")) {
+                            $("#table_events").DataTable().clear();
+                            $("#table_events").DataTable().destroy();
+                        }
+                        document.getElementById("table_events").innerHTML = "<div style='text-align:center;'><h2>Nu a fost gasit nici un eveniment</h2></div>";
+                    } else {
+                    }
+
+                },
+                "autoWidth": false,
+                "deferRender": true,
+                "columns": [
+                    {
+                        "data": null,
+                        "className": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": "",
+                        "width": "120px",
+                        title: "",
+                        render: function (data, type, row) {
+
+                            return `
+                          <a href="javascript:;" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
+                            <i class="material-icons text-secondary position-relative text-lg">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit product">
+                            <i class="material-icons text-secondary position-relative text-lg">drive_file_rename_outline</i>
+                            </a>
+                            <a href="javascript:;" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
+                            <i class="material-icons text-secondary position-relative text-lg">delete</i>
+                            </a>
+                        `;
+
+                        }
+                    },
+                    {
+                        data: "date",
+                        className: "date",
+                        title: "Data",
+                        visible: true,
+                        render: function (data, type, row) {
+                            var today = new Date();  // Creează un obiect Date pentru data curentă
+                            var eventData = new Date(data);
+                            var formattedDate = eventData.toLocaleDateString();
+
+                            if (eventData > today) {
+                                return '<span class="badge badge-success badge-lg" style="font-size: 12px; ">'+ formattedDate +'</span>'
+                            } else if (eventData.toDateString() === today.toDateString()) {
+                                return '<span class="badge badge-danger badge-lg" style="font-size: 12px; ">'+ formattedDate +'</span>'
+                            } else {
+                                return '<span class="badge badge-secondary" style="font-size: 10px; ">'+ formattedDate +'</span>'
+                            }
+
+                            //return '<span class="label stato label-success" style="color: #ffffff; background-color:' + colore + '; font-size: 100%">' + formattedDate + '</span>';
+                        }
+                    },
+                    {
+                        data: "time",
+                        className: "time",
+                        title: "Ora",
+                        visible: true
+                    },
+                    {
+                        data: "event_type",
+                        className: "event_type",
+                        title: "Tip Eveniment",
+                        visible: true
+                    },
+                    {
+                        data: "location",
+                        className: "location",
+                        title: "Locatia",
+                        visible: true
+                    },
+                    {
+                        data: "dancers",
+                        className: "dancers",
+                        title: "Dansatori",
+                        visible: true
+                    },
+                    {
+                        data: "mires",
+                        className: "mires",
+                        title: "Miri",
+                        visible: true
+                    },
+                    {
+                        data: "contacts",
+                        className: "contacts",
+                        title: "Contacte",
+                        visible: true
+                    },
+                    {
+                        data: "details",
+                        className: "details",
+                        title: "Detalii",
+                        visible: true,
+                        render: function (data, type, row) {
+                            data = data || "";  // Asigură-te că data este un șir, chiar și dacă este null sau undefined
+                            var truncatedData = data.length > 50 ? data.slice(0, 50) + "..." : data;
+                            return truncatedData;
+                        }
+                    },
+                    {
+                        data: "photo_video",
+                        className: "photo_video",
+                        title: "Foto/Video",
+                        visible: true
+                    },
+                    {
+                        data: "music",
+                        className: "music",
+                        title: "Muzica",
+                        visible: true
+                    },
+                    {
+                        data: "moderators",
+                        className: "moderators",
+                        title: "Moderator",
+                        visible: true
+                    },
+
+                ],
+                "select": {
+                    style: "single"
+                },
+                "autoWidth": false,
+            });
+
+        }
+
+        $(document).ready(function () {
+            table_events();
+        });
+    </script>
+
+    <script>
+        const rows = document.querySelectorAll('tr[id]');
+
+        // Adăugați un eveniment de clic pe fiecare rând
+        rows.forEach(row => {
+            row.addEventListener('click', () => {
+                // Obțineți id-ul din atributul data-id
+                const id = row.getAttribute('id');
+                const name = row.childNodes[1].innerText;
+                const duration = row.childNodes[3].innerText;
+
+                Swal.fire({
+                    title: 'Modifica Servizio',
+                    html: `
+                  <form id="service-edit">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Nome</label>
+                      <input type="text" class="form-control" id="newName" value="` + name + `" required>
+                    </div>
+                    <div class="input-group input-group-static mb-4">
+                      <label>Durata (min.)</label>
+                      <input type="number" class="form-control" id="newDuration" value="` + duration + `" required>
+                    </div>
+                  </form>
+                `,
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    confirmButtonText: 'Modifica',
+                    denyButtonText: `Elimina`,
+                    cancelButtonText: 'Annulla',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        const newName = document.getElementById('newName').value;
+                        const newDuration = document.getElementById('newDuration').value;
+
+                        $.ajax({
+                            url: '/admin/services',
+                            method: 'POST',
+                            data: {newName, newDuration, id},
+                            success: function (response) {
+                                Swal.fire('Servizio modificato con successo!', '', 'success');
+                            },
+                            error: function (error) {
+                                console.error('Eroare:', error);
+                                Swal.fire('Errore durante la modifica del servizio', 'Si è verificato un errore durante la modifica del servizio.', 'error');
+                            }
+                        });
+                    }
+                }).then((result) => {
+                    if (result.isDenied) {
+                        const type = 'delete';
+                        $.ajax({
+                            url: '/admin/services',
+                            method: 'POST',
+                            data: {id, type},
+                            success: function (response) {
+                                Swal.fire('Servizio Eliminato con successo!', '', 'success');
+                            },
+                            error: function (error) {
+                                console.error('Eroare:', error);
+                                Swal.fire('Errore durante la modifica del servizio', 'Si è verificato un errore durante la modifica del servizio.', 'error');
+                            }
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
