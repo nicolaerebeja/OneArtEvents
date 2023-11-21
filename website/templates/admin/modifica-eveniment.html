@@ -1,0 +1,237 @@
+{% extends "admin/base.html" %}
+{% block title1 %}Servizi{% endblock %}
+{% block title %}Servizi{% endblock %}
+
+{% block style %}
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
+    <style>
+        tr[id] {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card blur shadow-blur">
+
+                <div class="card-header pb-0">
+                    <div class="d-lg-flex">
+                        <div>
+                            <h5 class="mb-0">Modifica Evenimentul</h5>
+                            <p class="text-sm mb-0">
+                                {#                                A lightweight, extendable, dependency-free javascript HTML table plugin.#}
+                            </p>
+                        </div>
+                        <div class="ms-auto my-auto mt-lg-0 mt-4">
+                            <div class="ms-auto my-auto">
+
+                                <a href="evenimentNou" class="btn btn-primary btn-sm mb-0"
+                                   target="_blank">+&nbsp; Eveniment Nou</a>
+
+                                <button type="button" class="btn btn-outline-primary btn-sm mb-0 save">
+                                    Salveaza
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-0">
+                    <div class="container mt-5">
+                        <form>
+                            <input hidden="hidden" id="id" value="{{ event.id }}">
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Data</label>
+                                        <input class="form-control datetimepicker flatpickr-input" type="date" id="date"
+                                               name="date" value="{{ event.date }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Ora</label>
+                                        <input class="form-control datetimepicker flatpickr-input" type="time" id="time"
+                                               name="time" value="{{ event.time }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group input-group-static mb-4">
+                                        <label>Tip Eveniment</label>
+                                        <select class="form-control" id="tip_eveniment" name="tip_eveniment"
+                                                value="{{ event.event_type }}">
+                                            <option>Nunta</option>
+                                            <option>Cumatrie</option>
+                                            <option>Alteceva</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Locatia</label>
+                                        <input class="form-control datetimepicker flatpickr-input" type="text"
+                                               id="location" value="{{ event.location.name }}"
+                                               name="location"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Strada</label>
+                                        <input class="form-control datetimepicker flatpickr-input" type="text"
+                                               id="street" name="street" value="{{ event.location.street }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Detalii</label>
+                                        <input class="form-control datetimepicker flatpickr-input" type="text"
+                                               id="location_details"
+                                               name="location_details" value="{{ event.location.details }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12">
+
+                                    <select class="form-control" id="dancers" name="dancers" placeholder="Dansatori"
+                                            multiple>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Mirii</label>
+                                        <input class="form-control" type="text" id="miri" name="miri"
+                                               value="{{ event.mires }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Contacte</label>
+                                        <input class="form-control" type="text" id="contacte_miri" name="contacte_miri"
+                                               value="{{ event.contacts }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="input-group input-group-dynamic">
+                    <textarea class="form-control" rows="2"
+                              placeholder="Detalii despre nunta"
+                              spellcheck="false" id="detalii_nunta">{{ event.details }}</textarea>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-primary btn-sm mb-3 mt-3 save">
+                                Salveaza
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(function () {
+            var dancersSelect = document.getElementById('dancers');
+
+            $.ajax({
+                url: "/getDancers",
+                method: "GET",
+                success: function (data) {
+                    var dancers = '{{ event.dancers}}';
+                    for (var i = 0; i < data.length; i++) {
+                        var option = document.createElement('option');
+                        option.value = data[i].name;
+                        option.text = data[i].name;
+                        if (dancers.includes(data[i].name)) {
+                            option.selected = true;
+                        }
+                        dancersSelect.appendChild(option);
+                    }
+
+                    // După ce ați adăugat opțiunile, creați obiectul SlimSelect
+                    selectDancers = new SlimSelect({
+                        select: '#dancers'
+                    });
+                }
+            });
+        });
+
+        $(".save").on("click", salveazaDetaliiEveniment);
+
+        function salveazaDetaliiEveniment() {
+            Swal.fire({
+                title: 'Modifica Eveniment',
+                text: "Esti sigur ca vrei sa salvezi?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Confirma',
+                cancelButtonText: 'Anuleaza',
+                preConfirm: () => {
+                    const id = document.getElementById('id').value;
+                    const date = document.getElementById('date').value;
+                    const time = document.getElementById('time').value;
+                    const tip_eveniment = document.getElementById('tip_eveniment').value;
+                    const location = document.getElementById('location').value;
+                    const street = document.getElementById('street').value;
+                    const location_details = document.getElementById('location_details').value;
+                    const dancers = selectDancers.getSelected().toString()
+                    const miri = document.getElementById('miri').value;
+                    const contacte_miri = document.getElementById('contacte_miri').value;
+                    const detalii_nunta = document.getElementById('detalii_nunta').value;
+
+                    $.ajax({
+                        url: '/modificaDetaliiEveniment',
+                        method: 'POST',
+                        data: {
+                            id,
+                            date,
+                            time,
+                            tip_eveniment,
+                            location,
+                            street,
+                            location_details,
+                            dancers,
+                            miri,
+                            contacte_miri,
+                            detalii_nunta
+                        },
+                        success: function (response) {
+                            Swal.fire('Eveniment modificat cu succes!', '', 'success');
+                        },
+                        error: function (error) {
+                            console.error('Eroare:', error);
+                            Swal.fire('Eroare', 'A fost depistata o eroare in timpul modificarii evenimentului.', 'error');
+                        }
+                    });
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,357 @@
+{% macro create_event() %}
+
+    <div class="container mt-5">
+        <form>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Data</label>
+                        <input class="form-control datetimepicker flatpickr-input" type="date" id="date" name="date"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Ora</label>
+                        <input class="form-control datetimepicker flatpickr-input" type="time" id="time" name="time"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-static mb-4">
+                        <label>Tip Eveniment</label>
+                        <select class="form-control" id="tip_eveniment" name="tip_eveniment">
+                            <option>Nunta</option>
+                            <option>Cumatrie</option>
+                            <option>Alteceva</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Locatia</label>
+                        <input class="form-control datetimepicker flatpickr-input" type="text" id="location"
+                               name="location"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Strada</label>
+                        <input class="form-control datetimepicker flatpickr-input" type="text" id="street" name="street"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Detalii</label>
+                        <input class="form-control datetimepicker flatpickr-input" type="text" id="location_details"
+                               name="location_details"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+
+                    <select class="form-control" id="dancers" name="dancers" placeholder="Dansatori" multiple>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-6">
+                    <div class="input-group input-group-static">
+                        <label>Mirii</label>
+                        <input class="form-control" type="text" id="miri" name="miri"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group input-group-static">
+                        <label>Contacte</label>
+                        <input class="form-control" type="text" id="contacte_miri" name="contacte_miri"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="input-group input-group-dynamic">
+                    <textarea class="form-control" rows="2"
+                              placeholder="Detalii despre nunta"
+                              spellcheck="false" id="detalii_nunta"></textarea>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endmacro %}
+
+
+<script>
+    {% macro table_events() %}
+
+        function table_events() {
+
+
+            $('#table_events thead tr').clone(true).appendTo('#table_events thead');
+
+            //Setup - add a text input to each footer cell
+            $('#table_events thead tr:eq(1) th').each(function (i) {
+                if (i >= 1) $(this).html('<input type="text" style="border-color: black; border-radius: 3px;"/>');
+                else $(this).html('');
+
+                $('input', this).on('keyup change', function () {
+
+                    if ($("#table_events").DataTable().column(i).search() !== this.value) {
+                        $("#table_events").DataTable().column(i).search(this.value).draw();
+                    }
+
+                });
+            });
+
+            table_events = $("#table_events").DataTable({
+                responsive: false,
+                "ajax": {
+                    "url": "getEvents",
+                    "dataType": "json",
+                    "dataSrc": "",
+                    "contentType": "application/json",
+                    "error": function (error) {
+                        console.log(error);
+                    }
+                },
+                "language": {
+                    searchPlaceholder: "Cauta in tabela..."
+                },
+                'dom': ' <"c8tableBody"lft><"bottom"ip><"clear">',
+                "pageLength": 25,
+                "aLengthMenu": [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "Tutti"]
+                ],
+                "orderCellsTop": true,
+                "fixedHeader": true,
+                "bAutoWidth": false,
+                select: {
+                    selector: "td:not(:first-child)",
+                    style: "os"
+                },
+                "initComplete": function (settings, json) {
+                    //$("#loader").fadeOut(1500);
+                    //console.log(json);
+                    if ($("#table_events tbody tr").length === 0) {
+                        if ($.fn.DataTable.isDataTable("#table_events")) {
+                            $("#table_events").DataTable().clear();
+                            $("#table_events").DataTable().destroy();
+                        }
+                        document.getElementById("table_events").innerHTML = "<div style='text-align:center;'><h2>Nu a fost gasit nici un eveniment</h2></div>";
+                    } else {
+                        $(".vezi_detalii_eveniment").on("click", arataDetaliiEveniment);
+                        $(".modifica_detalii_eveniment").on("click", modificaDetaliiEveniment);
+                        $(".sterge_eveniment").on("click", arataDetaliiEveniment);
+                    }
+
+                },
+                "autoWidth": false,
+                "deferRender": true,
+                "columns": [
+                    {
+                        "data": null,
+                        "className": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": "",
+                        "width": "120px",
+                        title: "",
+                        render: function (data, type, row) {
+
+                            return `
+                          <a href="javascript:;" class="vezi_detalii_eveniment" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
+                            <i class="material-icons text-secondary position-relative text-lg">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="modifica_detalii_eveniment" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit product">
+                            <i class="material-icons text-secondary position-relative text-lg">drive_file_rename_outline</i>
+                            </a>
+                            <a href="javascript:;" class="sterge_eveniment" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
+                            <i class="material-icons text-secondary position-relative text-lg">delete</i>
+                            </a>
+                        `;
+
+                        }
+                    },
+                    {
+                        data: "date",
+                        className: "date",
+                        title: "Data",
+                        visible: true,
+                        render: function (data, type, row) {
+                            var today = new Date();  // Creează un obiect Date pentru data curentă
+                            var eventData = new Date(data);
+                            var formattedDate = eventData.toLocaleDateString();
+
+                            if (eventData > today) {
+                                return '<span class="badge badge-success badge-lg" style="font-size: 12px; ">' + data + '</span>'
+                            } else if (eventData.toDateString() === today.toDateString()) {
+                                return '<span class="badge badge-danger badge-lg" style="font-size: 12px; ">' + data + '</span>'
+                            } else {
+                                return '<span class="badge badge-secondary badge-lg" style="font-size: 12px; ">' + data + '</span>'
+                            }
+
+                            //return '<span class="label stato label-success" style="color: #ffffff; background-color:' + colore + '; font-size: 100%">' + formattedDate + '</span>';
+                        }
+                    },
+                    {
+                        data: "time",
+                        className: "time",
+                        title: "Ora",
+                        visible: true
+                    },
+                    {
+                        data: "id",
+                        className: "id",
+                        //title: "id",
+                        visible: false
+                    },
+                    {
+                        data: "event_type",
+                        className: "event_type",
+                        title: "Tip Eveniment",
+                        visible: true
+                    },
+                    {
+                        data: "location",
+                        className: "location",
+                        title: "Locatia",
+                        visible: true
+                    },
+                    {
+                        data: "location_street",
+                        className: "location_street",
+                        //title: "Locatia",
+                        visible: false
+                    },
+                    {
+                        data: "location_details",
+                        className: "location_details",
+                        //title: "Locatia",
+                        visible: false
+                    },
+                    {
+                        data: "dancers",
+                        className: "dancers",
+                        title: "Dansatori",
+                        visible: true
+                    },
+                    {
+                        data: "mires",
+                        className: "mires",
+                        title: "Miri",
+                        visible: true
+                    },
+                    {
+                        data: "contacts",
+                        className: "contacts",
+                        title: "Contacte",
+                        visible: true
+                    },
+                    {
+                        data: "details",
+                        className: "details",
+                        title: "Detalii",
+                        visible: true,
+                        render: function (data, type, row) {
+                            data = data || "";  // Asigură-te că data este un șir, chiar și dacă este null sau undefined
+                            var truncatedData = data.length > 50 ? data.slice(0, 50) + "..." : data;
+                            return truncatedData;
+                        }
+                    },
+                    {
+                        data: "photo_video",
+                        className: "photo_video",
+                        title: "Foto/Video",
+                        visible: false
+                    },
+                    {
+                        data: "music",
+                        className: "music",
+                        title: "Muzica",
+                        visible: false
+                    },
+                    {
+                        data: "moderators",
+                        className: "moderators",
+                        title: "Moderator",
+                        visible: false
+                    },
+
+                ],
+                "select": {
+                    style: "single"
+                },
+                "autoWidth": false,
+            });
+
+        }
+
+        $(document).ready(function () {
+            table_events();
+        });
+
+        function modificaDetaliiEveniment(){
+            var $row = $(this).closest("tr");
+            var $table_id = table_events.row($row).data().id;
+            window.open("modificaDetaliiEveniment?id="+$table_id, "_blank");
+        }
+
+        function arataDetaliiEveniment() {
+            var $row = $(this).closest("tr");
+            var $table_date = table_events.row($row).data().date;
+            var $table_time = table_events.row($row).data().time;
+            var $table_event_type = table_events.row($row).data().event_type;
+            var $table_location_street = table_events.row($row).data().location_street;
+            var $table_location_details = table_events.row($row).data().location_details;
+            var $table_location = table_events.row($row).data().location;
+            var $table_dancers = table_events.row($row).data().dancers;
+            var $table_mires = table_events.row($row).data().mires;
+            var $table_contacts = table_events.row($row).data().contacts;
+            var $table_details = table_events.row($row).data().details;
+
+            Swal.fire({
+                //title: 'Adauga Eveniment',
+                html: `{{ create_event() }}`,
+                //showCancelButton: true,
+                //cancelButtonText: 'Anuleaza',
+                width: 1000,
+            })
+            document.querySelector('#date').value = $table_date
+            document.querySelector("#time").value = $table_time
+            document.querySelector("#tip_eveniment").value = $table_event_type
+            document.querySelector("#location").value = $table_location
+            document.querySelector("#street").value = $table_location_street
+            document.querySelector("#location_details").value = $table_location_details
+            document.querySelector("#miri").value = $table_mires
+            document.querySelector("#contacte_miri").value = $table_contacts
+            document.querySelector("#detalii_nunta").value = $table_details
+
+
+            var dancersSelect = document.querySelector("#dancers");
+            var newInputGroup = document.createElement("div");
+            newInputGroup.className = "input-group input-group-static";
+            newInputGroup.innerHTML = '<label>Dansatori</label><input class="form-control datetimepicker flatpickr-input" type="text" id="dancers" name="dancers" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">';
+            dancersSelect.parentNode.replaceChild(newInputGroup, dancersSelect);
+
+            document.querySelector("#dancers").value = $table_dancers
+
+        }
+    {% endmacro %}
+
+
+</script>
