@@ -20233,7 +20233,7 @@ fieldset:disabled .btn {
 }
 
 .alert-warning {
-  background-image: linear-gradient(195deg, #FFA726 0%, #FB8C00 100%);
+  background-image: linear-gradient(195deg, #ff0000 0%, #4c0000 100%);
 }
 
 .alert-danger {
@@ -21173,7 +21173,7 @@ fieldset:disabled .btn {
 }
 
 .card.card-background.card-background-mask-warning:after {
-  background-image: linear-gradient(195deg, #FFA726 0%, #FB8C00 100%);
+  background-image: linear-gradient(195deg, #ff0000 0%, #4c0000 100%);
   opacity: .85;
 }
 
@@ -22591,8 +22591,12 @@ label,
 }
 
 .bg-gradient-warning {
-  background-image: linear-gradient(195deg, #FFA726 0%, #FB8C00 100%);
+  background-image: linear-gradient(195deg, #ff0000 0%, #4c0000 100%);
 }
+
+/*.bg-gradient-warning {*/
+/*  background-image: linear-gradient(195deg, #ff0000 0%, #4c0000 100%);*/
+/*}*/
 
 .bg-gradient-danger {
   background-image: linear-gradient(195deg, #EF5350 0%, #E53935 100%);
@@ -24813,7 +24817,7 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
 .pagination.pagination-warning .page-item.active>.page-link,
 .pagination.pagination-warning .page-item.active>.page-link:focus,
 .pagination.pagination-warning .page-item.active>.page-link:hover {
-  background-image: linear-gradient(195deg, #FFA726 0%, #FB8C00 100%);
+  background-image: linear-gradient(195deg, #ff0000 0%, #4c0000 100%);
   border: none;
 }
 

@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> 30 </title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>AFOA - {{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/admin/favicon.ico') }}">
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
@@ -28,21 +28,51 @@
           rel="stylesheet"
           type="text/css">
 
+    <style>
+                .ui-autocomplete {
+            position: absolute;
+            z-index: 9999;
+            cursor: default;
+            padding: 0;
+            margin-top: 2px;
+            list-style: none;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .ui-autocomplete > li {
+            padding: 3px 20px;
+        }
+
+        .ui-autocomplete > li.ui-state-focus {
+            background-color: #DDD;
+        }
+
+        .ui-helper-hidden-accessible {
+            display: none;
+        }
+    </style>
 
     {% block style %} {% endblock %}
 
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show bg-gray-200 dark-version">
 <aside
-        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark bg-white"
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark ps ps--active-y"
         id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="/website/static" target="_blank">
+        <a class="navbar-brand m-0" href="/" target="_blank">
             <!-- <span class="ms-1 font-weight-bold text-white">IT-Expert</span> -->
-            <img src="{{ url_for('static', filename='/admin/favicon.ico') }}" alt="/" srcset="">
+            <img src="{{ url_for('static', filename='/admin/logo.png') }}" alt="/" srcset="" style="max-height: 3rem;">
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -63,9 +93,19 @@
                 <a class="nav-link text-white {% if request.path == '/events' %}active bg-gradient-warning{% endif %} "
                    href="/events">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
+                        <i class="material-icons opacity-10">format_list_bulleted</i>
                     </div>
                     <span class="nav-link-text ms-1">Evenimente</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white {% if request.path == '/adaugaEvenimentComplet' %}active bg-gradient-warning{% endif %} "
+                   href="/adaugaEvenimentComplet">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">add</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Eveniment Nou</span>
                 </a>
             </li>
 
@@ -78,71 +118,6 @@
                     <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
-
-            {#            <li class="nav-item">#}
-            {#                <a class="nav-link text-white {% if request.path.startswith('/admin/customers') %}active bg-gradient-warning{% endif %}"#}
-            {#                   href="/admin/customers">#}
-            {#                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">#}
-            {#                        <i class="material-icons opacity-10">groups</i>#}
-            {#                    </div>#}
-            {#                    <span class="nav-link-text ms-1">Clienti</span>#}
-            {#                </a>#}
-            {#            </li>#}
-            {##}
-            {#            <li class="nav-item">#}
-            {#                <a class="nav-link text-white {% if request.path.startswith('/admin/appointments') %}active bg-gradient-warning{% endif %}"#}
-            {#                   href="/admin/appointments">#}
-            {#                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">#}
-            {#                        <i class="material-icons opacity-10">done_all</i>#}
-            {#                    </div>#}
-            {#                    <span class="nav-link-text ms-1">Appuntamenti</span>#}
-            {#                </a>#}
-            {#            </li>#}
-            {##}
-            {#            <li class="nav-item">#}
-            {#                <a class="nav-link text-white {% if request.path.startswith('/admin/services') %}active bg-gradient-warning{% endif %}"#}
-            {#                   href="/admin/services">#}
-            {#                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">#}
-            {#                        <i class="material-icons opacity-10">settings</i>#}
-            {#                    </div>#}
-            {#                    <span class="nav-link-text ms-1">Servizi</span>#}
-            {#                </a>#}
-            {#            </li>#}
-
-            {#            <li class="nav-item">#}
-            {#                <a data-bs-toggle="collapse" href="#reportistica"#}
-            {#                   class="nav-link text-white {% if request.path.startswith('/stato-cliente') %}active {% endif %} collapsed"#}
-            {#                   aria-controls="reportistica" role="button" aria-expanded="false">#}
-            {#                    <i class="material-icons opacity-10">settings</i>#}
-            {#                    <span class="nav-link-text ms-1">Configurazione</span>#}
-            {#                </a>#}
-            {#                <div class="collapse" id="reportistica" style="">#}
-            {#                    <ul class="nav ">#}
-            {#                        <li class="nav-item {% if request.path == '/stato-cliente/tutti' %}active {% endif %}">#}
-            {#                            <a class="nav-link text-white {% if request.path == '/stato-cliente/tutti' %}active {% endif %}"#}
-            {#                               href="/stato-cliente/tutti">#}
-            {#                                <span class="sidenav-mini-icon"> O </span>#}
-            {#                                <span class="sidenav-normal  ms-2  ps-1"> Orari </span>#}
-            {#                            </a>#}
-            {#                        </li>#}
-            {#                        <li class="nav-item {% if request.path == '/admin/services' %}active {% endif %}">#}
-            {#                            <a class="nav-link text-white {% if request.path == '/admin/services' %}active {% endif %}"#}
-            {#                               href="/admin/services">#}
-            {#                                <span class="sidenav-mini-icon"> S </span>#}
-            {#                                <span class="sidenav-normal  ms-2  ps-1"> Servizi </span>#}
-            {#                            </a>#}
-            {#                        </li>#}
-            {#                        <li class="nav-item {% if request.path == '/stato-cliente/in_attesa' %}active {% endif %}">#}
-            {#                            <a class="nav-link text-white {% if request.path == '/stato-cliente/in_attesa' %}active {% endif %}"#}
-            {#                               href="/stato-cliente/in_attesa">#}
-            {#                                <span class="sidenav-mini-icon"> S </span>#}
-            {#                                <span class="sidenav-normal  ms-2  ps-1"> Staff </span>#}
-            {#                            </a>#}
-            {#                        </li>#}
-            {#                    </ul>#}
-            {#                </div>#}
-            {#            </li>#}
-
 
             <hr class="horizontal light mt-0 mb-2">
 
@@ -161,9 +136,9 @@
                     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a>
                     </li>
                     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
-                        {% block title1 %}{% endblock %}</li>
+                        {{ title }}</li>
                 </ol>
-                <h6 class="font-weight-bolder mb-0">{% block title %}{% endblock %}</h6>
+                <h6 class="font-weight-bolder mb-0">{{ title }}</h6>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -232,16 +207,7 @@
     }
 </script>
 
-<script>
-    function search() {
-        let search = document.getElementById('searchInput').value;
-        if (search.length > 2) {
-            window.location.href = "/cliente/" + search;
-        }
-    }
-</script>
-<!-- Github buttons -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{{ url_for('static', filename='/admin/dashboard/assets/js/material-dashboard.min.js') }} "></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

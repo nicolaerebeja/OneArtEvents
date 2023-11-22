@@ -14,13 +14,14 @@ class User(db.Model, UserMixin):
 
 class ServiceProvider(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    type = db.Column(db.String(255), nullable=True)
-    contacts = db.Column(db.String(255), nullable=True)
+    name = db.Column(db.String(255), nullable=False, unique=True)
+    type = db.Column(db.String(255), nullable=False)
+    contacts = db.Column(db.String(255))
+    details = db.Column(db.String(255))
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False, unique=True)
     street = db.Column(db.String(255), nullable=True)
     details = db.Column(db.String(255), nullable=True)
 
@@ -29,6 +30,8 @@ class Event(db.Model):
     date = db.Column(db.Date, default=datetime.utcnow, nullable=False)
     time = db.Column(db.Time, nullable=True)
     event_type = db.Column(db.String(255))
+
+    status = db.Column(db.String(255))
 
     location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
     location = db.relationship('Location', backref='locations', lazy=True,

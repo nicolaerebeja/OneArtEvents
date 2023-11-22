@@ -1,5 +1,6 @@
 {% extends "admin/base.html" %}
-{% set title = "Modifica Eveniment" %}
+
+{% set title = "Creeaza Eveniment" %}
 
 {% block style %}
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
@@ -19,17 +20,8 @@
 
                 <div class="card-header pb-0">
                     <div class="d-lg-flex">
-                        <div>
-                            <h5 class="mb-0">Modifica Evenimentul</h5>
-                            <p class="text-sm mb-0">
-                                {#                                A lightweight, extendable, dependency-free javascript HTML table plugin.#}
-                            </p>
-                        </div>
                         <div class="ms-auto my-auto mt-lg-0 mt-4">
                             <div class="ms-auto my-auto">
-
-                                <a href="evenimentNou" class="btn btn-primary btn-sm mb-0"
-                                   target="_blank">+&nbsp; Eveniment Nou</a>
 
                                 <button type="button" class="btn btn-outline-primary btn-sm mb-0 save">
                                     Salveaza
@@ -41,56 +33,53 @@
                 <div class="card-body px-0 pb-0">
                     <div class="container mt-5">
                         <form>
-                            <input hidden="hidden" id="id" value="{{ event.id }}">
                             <div class="row mt-3">
                                 <div class="col-4">
                                     <div class="input-group input-group-static">
                                         <label>Data</label>
-                                        <input class="form-control datetimepicker flatpickr-input  text-white" type="date" id="date"
-                                               name="date" value="{{ event.date }}"
+                                        <input class="form-control datetimepicker flatpickr-input text-white"
+                                               type="date" id="date"
+                                               name="date" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="input-group input-group-static">
                                         <label>Ora</label>
-                                        <input class="form-control datetimepicker flatpickr-input  text-white" type="text" id="time"
-                                               name="time" value="{{ event.time }}"
+                                        <input class="form-control flatpickr-input text-white" type="text" id="time"
+                                               name="time" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group input-group-static mb-4">
                                         <label>Tip Eveniment</label>
-                                        <select class="form-control text-white bg-dark" id="tip_eveniment" name="tip_eveniment">
-                                            <option value="" {% if event.event_type is none %}selected{% endif %}></option>
-                                            <option value="Nunta" {% if event.event_type == 'Nunta' %}selected{% endif %}>Nunta</option>
-                                            <option value="Cumatrie" {% if event.event_type == 'Cumatrie' %}selected{% endif %}>Cumatrie</option>
-                                            <option value="Alteceva" {% if event.event_type == 'Alteceva' %}selected{% endif %}>Alteceva</option>
+                                        <select class="form-control text-white bg-dark" id="tip_eveniment"
+                                                name="tip_eveniment"
+                                                value="">
+                                            <option>Nunta</option>
+                                            <option>Cumatrie</option>
+                                            <option>Alteceva</option>
                                         </select>
-
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group input-group-static mb-4">
                                         <label>Status</label>
                                         <select class="form-control text-white bg-dark" id="status" name="status">
-                                            <option value="" {% if event.status is none %}selected{% endif %}></option>
-                                            <option value="Semnat" {% if event.status == 'Semnat' %}selected{% endif %}>Semnat</option>
-                                            <option value="De Semnat" {% if event.status == 'De Semnat' %}selected{% endif %}>De Semnat</option>
-                                            <option value="Anulat" {% if event.status == 'Anulat' %}selected{% endif %}>Anulat</option>
+                                            <option>Semnat</option>
+                                            <option>De Semnat</option>
+                                            <option>Anulat</option>
                                         </select>
-
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row mt-3">
                                 <div class="col-4">
                                     <div class="input-group input-group-static">
                                         <label>Locatia</label>
-                                        <input class="form-control flatpickr-input  text-white" type="text"
-                                               id="location" value="{{ event.location.name }}"
+                                        <input class="form-control flatpickr-input text-white" type="text"
+                                               id="location" value=""
                                                name="location"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
@@ -99,16 +88,16 @@
                                     <div class="input-group input-group-static">
                                         <label>Strada</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="street" name="street" value="{{ event.location.street }}"
+                                               id="street" name="street" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="input-group input-group-static">
                                         <label>Detalii</label>
-                                        <input class="form-control flatpickr-input  text-white" type="text"
+                                        <input class="form-control flatpickr-input text-white" type="text"
                                                id="location_details"
-                                               name="location_details" value="{{ event.location.details }}"
+                                               name="location_details" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -127,16 +116,17 @@
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
                                         <label>Mirii</label>
-                                        <input class="form-control  text-white" type="text" id="miri" name="miri"
-                                               value="{{ event.mires }}"
+                                        <input class="form-control text-white" type="text" id="miri" name="miri"
+                                               value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
                                         <label>Contacte</label>
-                                        <input class="form-control  text-white" type="text" id="contacte_miri" name="contacte_miri"
-                                               value="{{ event.contacts }}"
+                                        <input class="form-control text-white" type="text" id="contacte_miri"
+                                               name="contacte_miri"
+                                               value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -144,9 +134,9 @@
 
                             <div class="row mt-3">
                                 <div class="input-group input-group-dynamic">
-                    <textarea class="form-control  text-white" rows="2"
+                    <textarea class="form-control text-white" rows="2"
                               placeholder="Detalii despre nunta"
-                              spellcheck="false" id="detalii_nunta">{{ event.details }}</textarea>
+                              spellcheck="false" id="detalii_nunta"></textarea>
                                 </div>
                             </div>
 
@@ -155,7 +145,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Moderator</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="moderator" value="{{ event.moderators.name }}"
+                                               id="moderator" value=""
                                                name="moderator"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
@@ -164,7 +154,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Contacte</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="contacte_moderator" name="contacte_moderator" value="{{ event.moderators.contacts }}"
+                                               id="contacte_moderator" name="contacte_moderator" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -173,7 +163,7 @@
                                         <label>Detalii</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
                                                id="detalii_moderator"
-                                               name="detalii_moderator" value="{{ event.moderators.details }}"
+                                               name="detalii_moderator" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -184,7 +174,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Foto/Video</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="fotoVideo" value="{{ event.photo_video.name }}"
+                                               id="fotoVideo" value=""
                                                name="fotoVideo"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
@@ -193,7 +183,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Contacte</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="contacte_fotoVideo" name="contacte_fotoVideo" value="{{ event.photo_video.contacts }}"
+                                               id="contacte_fotoVideo" name="contacte_fotoVideo" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -202,7 +192,7 @@
                                         <label>Detalii</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
                                                id="detalii_fotoVideo"
-                                               name="detalii_fotoVideo" value="{{ event.photo_video.details }}"
+                                               name="detalii_fotoVideo" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -213,7 +203,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Muzica</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="muzica" value="{{ event.music.name }}"
+                                               id="muzica" value=""
                                                name="muzica"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
@@ -222,7 +212,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Contacte</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
-                                               id="contacte_muzica" name="contacte_muzica" value="{{ event.music.contacts }}"
+                                               id="contacte_muzica" name="contacte_muzica" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -231,7 +221,7 @@
                                         <label>Detalii</label>
                                         <input class="form-control flatpickr-input text-white" type="text"
                                                id="detalii_muzica"
-                                               name="detalii_muzica" value="{{ event.music.details }}"
+                                               name="detalii_muzica" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -260,24 +250,35 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(function () {
+    var selectDancers;
 
+$(function () {
 
+    function getDancers(){
+        var dateElement = $('input[name="date"]');
+
+        if (dateElement.val()) {
             var dancersSelect = document.getElementById('dancers');
+            var date = document.getElementById('date').value;
+
+            // Golește selectul înainte de a adăuga opțiunile noi
+            dancersSelect.innerHTML = '';
 
             $.ajax({
-                url: "/getDancers?date=2000-10-10",
+                url: "/getDancers?date=" + date,
                 method: "GET",
                 success: function (data) {
-                    var dancers = '{{ event.dancers}}';
                     for (var i = 0; i < data.length; i++) {
                         var option = document.createElement('option');
                         option.value = data[i].name;
                         option.text = data[i].name;
-                        if (dancers.includes(data[i].name)) {
-                            option.selected = true;
-                        }
+
                         dancersSelect.appendChild(option);
+                    }
+
+                    // Inițializează sau actualizează SlimSelect după adăugarea opțiunilor
+                    if (selectDancers) {
+                        selectDancers.destroy();
                     }
 
                     selectDancers = new SlimSelect({
@@ -285,10 +286,19 @@
                     });
                 }
             });
+        }
+    }
 
-        });
+    getDancers();
 
-                //getLocation
+    var dateInput = document.getElementById('date');
+    dateInput.addEventListener('input', function() {
+        getDancers();
+    });
+});
+
+
+        //getLocation
         $(function () {
             $("#location").autocomplete({
                 source: function (request, response) {
@@ -353,18 +363,18 @@
             initializeAutocomplete("#muzica", "muzica");
         });
 
+
         $(".save").on("click", salveazaDetaliiEveniment);
 
         function salveazaDetaliiEveniment() {
             Swal.fire({
-                title: 'Modifica Eveniment',
+                title: 'Salveaza Eveniment',
                 text: "Esti sigur ca vrei sa salvezi?",
                 icon: "question",
                 showCancelButton: true,
                 confirmButtonText: 'Confirma',
                 cancelButtonText: 'Anuleaza',
                 preConfirm: () => {
-                    const id = document.getElementById('id').value;
                     const date = document.getElementById('date').value;
                     const time = document.getElementById('time').value;
                     const tip_eveniment = document.getElementById('tip_eveniment').value;
@@ -376,6 +386,7 @@
                     const contacte_miri = document.getElementById('contacte_miri').value;
                     const detalii_nunta = document.getElementById('detalii_nunta').value;
                     const status = document.getElementById('status').value;
+
 
                     const moderator = document.getElementById('moderator').value;
                     const contacte_moderator = document.getElementById('contacte_moderator').value;
@@ -390,11 +401,11 @@
                     const muzica = document.getElementById('muzica').value;
                     const contacte_muzica = document.getElementById('contacte_muzica').value;
                     const detalii_muzica = document.getElementById('detalii_muzica').value;
+
                     $.ajax({
-                        url: '/modificaDetaliiEveniment',
+                        url: '/adaugaEveniment',
                         method: 'POST',
                         data: {
-                            id,
                             date, time,
                             tip_eveniment,
                             location, street, location_details,
@@ -405,13 +416,14 @@
                             moderator, contacte_moderator, detalii_moderator,
                             fotoVideo, contacte_fotoVideo, detalii_fotoVideo,
                             muzica, contacte_muzica, detalii_muzica
+
                         },
                         success: function (response) {
                             Swal.fire(response['message'], '', 'success');
                         },
                         error: function (error) {
                             console.error('Eroare:', error);
-                            Swal.fire('Eroare', 'A fost depistata o eroare in timpul modificarii evenimentului.', 'error');
+                            Swal.fire('Eroare', 'A fost depistata o eroare in timpul adaugarii evenimentului.', 'error');
                         }
                     });
                 }

@@ -1,16 +1,86 @@
 {% extends "admin/base.html" %}
-{% block title1 %}Dashboard{% endblock %}
-{% block title %}Dashboard{% endblock %}
+
+{% set title = "Dashboard" %}
 
 {% block content %}
 
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">assignment_turned_in</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Contracte Semnate</p>
+                        <h4 class="mb-0" id="contracte_semnate">0</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">pending_actions</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Contracte in asteptare</p>
+                        <h4 class="mb-0" id="contracte_in_asteptare">0</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2 bg-transparent">
+                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">shield_question</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize ">Revenue</p>
+                        <h4 class="mb-0 ">0</h4>
+                    </div>
+                </div>
+                <hr class="horizontal my-0 dark">
+                <div class="card-footer p-3">
+                    <p class="mb-0 "><span class="text-success text-sm font-weight-bolder">+1% </span>than yesterday</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <div class="card ">
+                <div class="card-header p-3 pt-2 bg-transparent">
+                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">person_add</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize ">Followers</p>
+                        <h4 class="mb-0 ">+91</h4>
+                    </div>
+                </div>
+                <hr class="horizontal my-0 dark">
+                <div class="card-footer p-3">
+                    <p class="mb-0 ">Just updated</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="row mb-12">
+    <div class="row mb-12 mt-3">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card">
                 <div class="card-body ml-2 mr-2">
 
-{#                    <div id='calendar'></div>#}
+                    {#                    <div id='calendar'></div>#}
 
                 </div>
             </div>
@@ -20,6 +90,23 @@
 
 {% block scripts %}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/getEventCounts')
+                .then(response => response.json())
+                .then(data => {
 
+                    document.getElementById('contracte_semnate').innerText = data.semnat;
+                    document.getElementById('contracte_in_asteptare').innerText = data.de_semnat;
+
+                    const alertContainer = document.querySelector('.container-fluid.py-4');
+                    const alertHTML = `<div class="alert alert-primary text-white mb-5" role="alert">
+                    Au fost depistate <strong>${data.altceva}</strong> contracte neconforme!
+                </div>`;
+                    alertContainer.insertAdjacentHTML('afterbegin', alertHTML);
+                })
+                .catch(error => console.error('Error fetching event counts:', error));
+        });
+    </script>
 
 {% endblock %}
