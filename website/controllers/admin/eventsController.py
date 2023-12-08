@@ -16,7 +16,7 @@ def eventsIndex():
 @login_required
 def adaugaEveniment():
     x = request.form
-    date_obj = datetime.strptime(x.get('date'), '%Y-%m-%d').date()
+    date_obj = datetime.strptime(x.get('date'), '%d/%m/%Y').date()
     time_obj = convert_hour(x.get('time'))
 
     tip_eveniment_decoded = unquote(x.get('tip_eveniment'))
@@ -58,7 +58,7 @@ def modificaDetaliiEveniment():
         try:
             x = request.form
             id = x.get('id')
-            date_obj = datetime.strptime(x.get('date'), '%Y-%m-%d').date()
+            date_obj = datetime.strptime(x.get('date'), '%d/%m/%Y').date()
             time_obj = convert_hour(x.get('time'))
 
             tip_eveniment_decoded = unquote(x.get('tip_eveniment'))
@@ -182,6 +182,8 @@ def getEvents():
             'status': event.status,
             'price': event.price,
 
+            # 'start': str(event.date)+'T'+str(event.time),
+            # 'end': str(event.date)+'T'+str(event.time),
             'start': str(event.date),
             'end': str(event.date),
             'title': event.event_type + ' - ' +event.location.name,

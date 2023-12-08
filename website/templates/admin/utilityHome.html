@@ -91,7 +91,13 @@
                     return event.start.toISOString().split('T')[0] === clickedDate.toISOString().split('T')[0];
                 });
 
-                dateClickFunction(eventsOnClickedDate)
+                var year = clickedDate.getFullYear();
+                var month = (clickedDate.getMonth() + 1).toString().padStart(2, '0'); // Adaugă un zero în față pentru luni mai mici de 10
+                var day = clickedDate.getDate().toString().padStart(2, '0'); // Adaugă un zero în față pentru zile mai mici de 10
+
+                clickedDate = year + '-' + month + '-' + day;
+
+                dateClickFunction(eventsOnClickedDate, clickedDate)
             },
             eventClick: function (info) {
                 eventClickFunction(info.event.id)
@@ -134,9 +140,11 @@
                 focusConfirm: false,
                 width: 1000,
                 preConfirm: () => {
-
+                    window.open("modificaDetaliiEveniment?id=" + eventId, "_blank");
                 }
             })
+
+            {#document.querySelector('#idEvent').value = event.extendedProps.eventDate#}
 
             document.querySelector('#date').value = event.extendedProps.eventDate
             document.querySelector('#date').disabled = true
@@ -173,8 +181,7 @@
     {% endmacro %}
 
     {% macro dateClickFunction() %}
-        function dateClickFunction(events) {
-
+        function dateClickFunction(events, date) {
             const eventsHtml = events.map(event => `
                     <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row mb-3">
                         <h6 class="mb-0">${event.title}, ${event.extendedProps.mires}</h6>
@@ -195,11 +202,16 @@
 
                 preConfirm: () => {
                     document.getElementById("open-modal-button").click();
+                    var dateModal = flatpickr("#date", {  dateFormat: "d/m/Y" });
+                    var selectedDate = new Date(date);
+                    dateModal.setDate(selectedDate);
                 }
             })
         }
 
         {{ utilityEvents.eveniment_nou_modal() }}
+
+
     {% endmacro %}
 
 </script>

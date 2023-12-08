@@ -47,7 +47,7 @@
                                     <div class="input-group input-group-static">
                                         <label>Data</label>
                                         <input class="form-control datetimepicker flatpickr-input  text-white" type="date" id="date"
-                                               name="date" value="{{ event.date }}"
+                                               name="date" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -279,10 +279,17 @@
         $(function () {
 
 
+            var dateModal = flatpickr("#date", {  dateFormat: "d/m/Y" });
+
+            var selectedDate = new Date('{{ event.date }}');
+
+            dateModal.setDate(selectedDate);
+
+
             var dancersSelect = document.getElementById('dancers');
 
             $.ajax({
-                url: "/getDancers?date=2000-10-10",
+                url: "/getDancers?date=10/10/2000",
                 method: "GET",
                 success: function (data) {
                     var dancers = '{{ event.dancers}}';

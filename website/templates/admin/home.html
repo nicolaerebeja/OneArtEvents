@@ -3,6 +3,16 @@
 {% import 'admin/utilityHome.html' as utility %}
 {% import 'admin/utilityEvents.html' as utilityEvents %}
 
+{% block style %}
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
+    <style>
+        tr[id] {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
 
@@ -103,9 +113,8 @@
 https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js
 "></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 
     <script>
         {{ utility.calendarEvents() }}

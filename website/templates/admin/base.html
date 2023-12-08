@@ -28,6 +28,11 @@
           rel="stylesheet"
           type="text/css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+
+
     <style>
         .ui-autocomplete {
             position: absolute;
@@ -221,8 +226,18 @@
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{{ url_for('static', filename='/admin/dashboard/assets/js/material-dashboard.min.js') }} "></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
 {% block scripts %} {% endblock %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    flatpickr("#date", {
+      dateFormat: "d/m/Y", // Setează formatul dorit (dd/mm/yyyy)
+    });
+  });
+</script>
 
 </body>
 

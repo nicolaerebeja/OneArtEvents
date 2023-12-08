@@ -55,21 +55,28 @@ def getLocation():
 @login_required
 def getDancers():
     date = request.args.get('date')
-    print(date)
+    original_date = datetime.strptime(date, '%d/%m/%Y')
+    date = original_date.strftime('%Y-%m-%d')
+
     # Verifică dacă data a fost furnizată
     if not date:
         print('not date')
         return jsonify([])
 
-    # Găsește evenimentul pentru data specificată
-    event = Event.query.filter_by(date=date).first()
+    # Găsește toate evenimentele pentru data specificată
+    events = Event.query.filter_by(date=date).all()
 
-    if event:
-        # Obține dansatorii care nu sunt deja atribuiți la eveniment
-        dancers = User.query.filter(User.first_name.notin_(event.dancers.split(','))).all()
+    eventDancers = []
+
+    for event in events:
+        eventDancers += event.dancers.split(',')
+    print(eventDancers)
+    if eventDancers:
+        dancers = User.query.filter(User.first_name.notin_(eventDancers)).all()
+        print(dancers)
     else:
-        # Dacă nu există un eveniment pentru data specificată, obține toți dansatorii
         dancers = User.query.all()
+
 
     dancers_json = [
         {
