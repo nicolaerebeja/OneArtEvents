@@ -19574,7 +19574,7 @@ textarea.form-control,textarea.form-control-lg,textarea.form-control-sm {
 
 */
 .alert-primary {
-    background-image: linear-gradient(195deg,#ec407a,#d81b60)
+    background-image: linear-gradient(195deg,#454545,#141414)
 }
 
 .alert-secondary {
@@ -21515,7 +21515,7 @@ textarea.form-control,textarea.form-control-lg,textarea.form-control-sm {
 }
 
 .bg-gradient-warning {
-    background-image: linear-gradient(195deg,#ffa726,#fb8c00)
+    background-image: linear-gradient(195deg,#ff0000,#570101)
 }
 
 .bg-gradient-danger {

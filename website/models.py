@@ -53,3 +53,6 @@ class Event(db.Model):
     mires = db.Column(db.String(255))
     contacts = db.Column(db.String(255))
     details = db.Column(db.Text)
+    culoarea = db.Column(db.Text)
+    price = db.Column(db.Text)
+

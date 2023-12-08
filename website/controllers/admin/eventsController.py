@@ -25,6 +25,8 @@ def adaugaEveniment():
     contacte_miri_decoded = unquote(x.get('contacte_miri'))
     detalii_nunta_decoded = unquote(x.get('detalii_nunta'))
     dancers_decoded = unquote(x.get('dancers'))
+    culoarea = unquote(x.get('culoarea'))
+    price = unquote(x.get('price'))
 
     location_id = get_or_crt_loc(x.get('location'), x.get('street'), x.get('location_details'))
     moderator = get_or_crt_pres(x.get('moderator'), x.get('contacte_moderator'), x.get('detalii_moderator'),
@@ -37,7 +39,7 @@ def adaugaEveniment():
     new_record = Event(date=date_obj, time=time_obj, event_type=tip_eveniment_decoded, location=location_id,
                        dancers=dancers_decoded, mires=miri_decoded, contacts=contacte_miri_decoded,
                        details=detalii_nunta_decoded, status=status_decoded, moderators_id=moderator, music_id=muzica,
-                       photo_video_id=fotoVideo)
+                       photo_video_id=fotoVideo, culoarea=culoarea, price=price)
     db.session.add(new_record)
     db.session.commit()
 
@@ -65,6 +67,8 @@ def modificaDetaliiEveniment():
             contacte_miri_decoded = unquote(x.get('contacte_miri'))
             detalii_nunta_decoded = unquote(x.get('detalii_nunta'))
             dancers_decoded = unquote(x.get('dancers'))
+            culoarea = unquote(x.get('culoarea'))
+            price = unquote(x.get('price'))
 
             location_id = get_or_crt_loc(x.get('location'), x.get('street'), x.get('location_details'))
             moderator = get_or_crt_pres(x.get('moderator'), x.get('contacte_moderator'), x.get('detalii_moderator'),
@@ -88,6 +92,8 @@ def modificaDetaliiEveniment():
                 'photo_video_id': fotoVideo,
                 'music_id': muzica,
                 'moderators_id': moderator,
+                'culoarea': culoarea,
+                'price': price
             }
 
             if event:
@@ -173,7 +179,14 @@ def getEvents():
             'mires': event.mires,
             'contacts': event.contacts,
             'details': event.details,
-            'status': event.status
+            'status': event.status,
+            'price': event.price,
+
+            'start': str(event.date),
+            'end': str(event.date),
+            'title': event.event_type + ' - ' +event.location.name,
+            'color': event.culoarea,
+            'eventDate': str(event.date),
             # Alte campuri pe care le ai în modelul tău Event
         }
         events_json.append(event_data)

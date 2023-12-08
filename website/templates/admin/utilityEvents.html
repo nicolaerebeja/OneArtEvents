@@ -168,10 +168,35 @@
                         visible: true
                     },
                     {
+                        data: "price",
+                        className: "price",
+                        title: "Price",
+                        visible: true
+                    },
+                    {
+                        data: "color",
+                        className: "color",
+                        title: "Culoarea",
+                        visible: true,
+                        render: function (data){
+                            //return '<span style="color:'+data+'">'+data+'</span>'
+                            return data
+                        }
+                    },
+                    {
                         data: "status",
                         className: "status",
                         title: "Status",
-                        visible: true
+                        visible: true,
+                        render: function (data){
+                            if (data === 'Semnat') {
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button><span>'+data+'</span></div>'
+                            } else if (data === 'De Semnat') {
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-white mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">pending</i></button><span>'+data+'</span></div>'
+                            } else {
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">clear</i></button><span>'+data+'</span></div>'
+                            }
+                        }
                     },
                     {
                         data: "details",
@@ -203,6 +228,7 @@
                         visible: false
                     },
 
+
                 ],
                 "select": {
                     style: "single"
@@ -233,7 +259,9 @@
             var $table_dancers = table_events.row($row).data().dancers;
             var $table_mires = table_events.row($row).data().mires;
             var $table_contacts = table_events.row($row).data().contacts;
+            var $table_price = table_events.row($row).data().price;
             var $table_details = table_events.row($row).data().details;
+            var $table_color = table_events.row($row).data().color;
 
             Swal.fire({
                 //title: 'Adauga Eveniment',
@@ -245,18 +273,20 @@
             document.querySelector('#date').value = $table_date
             document.querySelector("#time").value = $table_time
             document.querySelector("#tip_eveniment").value = $table_event_type
+            document.querySelector("#culoarea").value = $table_color
             document.querySelector("#location").value = $table_location
             document.querySelector("#street").value = $table_location_street
             document.querySelector("#location_details").value = $table_location_details
             document.querySelector("#miri").value = $table_mires
             document.querySelector("#contacte_miri").value = $table_contacts
+            document.querySelector("#price").value = $table_price
             document.querySelector("#detalii_nunta").value = $table_details
 
 
             var dancersSelect = document.querySelector("#dancers");
             var newInputGroup = document.createElement("div");
             newInputGroup.className = "input-group input-group-static";
-            newInputGroup.innerHTML = '<label>Dansatori</label><input class="form-control datetimepicker flatpickr-input" type="text" id="dancers" name="dancers" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">';
+            newInputGroup.innerHTML = '<label>Dansatori</label><input class="form-control text-white" type="text" id="dancers" name="dancers" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">';
             dancersSelect.parentNode.replaceChild(newInputGroup, dancersSelect);
 
             document.querySelector("#dancers").value = $table_dancers
@@ -277,29 +307,28 @@
                     <div class="input-group input-group-static">
                         <label>Data</label>
                         <input class="form-control datetimepicker flatpickr-input text-white" type="date" id="date"
-                               name="date"
-                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                               name="date" value="" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="input-group input-group-static">
                         <label>Ora</label>
-                        <input class="form-control datetimepicker flatpickr-input text-white" type="text" id="time"
-                               name="time"
-                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                        <input class="form-control flatpickr-input text-white" type="text" id="time" name="time"
+                               value="" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <div class="input-group input-group-static mb-4">
                         <label>Tip Eveniment</label>
-                        <select class="form-control text-white bg-dark" id="tip_eveniment" name="tip_eveniment">
+                        <select class="form-control text-white bg-dark" id="tip_eveniment" name="tip_eveniment"
+                                value="">
                             <option>Nunta</option>
                             <option>Cumatrie</option>
                             <option>Alteceva</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <div class="input-group input-group-static mb-4">
                         <label>Status</label>
                         <select class="form-control text-white bg-dark" id="status" name="status">
@@ -307,6 +336,13 @@
                             <option>De Semnat</option>
                             <option>Anulat</option>
                         </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group input-group-static">
+                        <label>Culoarea</label>
+                        <input class="form-control flatpickr-input text-white" type="text" id="culoarea" name="culoarea"
+                               value="" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
             </div>
@@ -347,17 +383,24 @@
 
 
             <div class="row mt-4">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="input-group input-group-static">
                         <label>Mirii</label>
                         <input class="form-control text-white" type="text" id="miri" name="miri"
                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="input-group input-group-static">
                         <label>Contacte</label>
                         <input class="form-control text-white" type="text" id="contacte_miri" name="contacte_miri"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group input-group-static">
+                        <label>Price</label>
+                        <input class="form-control text-white" type="text" id="price" name="price"
                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
@@ -406,8 +449,10 @@
                     const dancers = selectDancers.getSelected().toString()
                     const miri = document.getElementById('miri').value;
                     const contacte_miri = document.getElementById('contacte_miri').value;
+                    const price = document.getElementById('price').value;
                     const detalii_nunta = document.getElementById('detalii_nunta').value;
                     const status = document.getElementById('status').value;
+                    const culoarea = document.getElementById('culoarea').value;
 
                     $.ajax({
                         url: '/adaugaEveniment',
@@ -422,8 +467,10 @@
                             dancers,
                             miri,
                             contacte_miri,
+                            price,
                             detalii_nunta,
-                            status
+                            status,
+                            culoarea
                         },
                         success: function (response) {
                             table_events.ajax.reload()

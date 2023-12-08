@@ -1,0 +1,218 @@
+{% import 'admin/utilityEvents.html' as utilityEvents %}
+
+<script>
+
+    {% macro getEventCounts() %}
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/getEventCounts')
+                .then(response => response.json())
+                .then(data => {
+
+                    document.getElementById('contracte_semnate').innerText = data.semnat;
+                    document.getElementById('contracte_in_asteptare').innerText = data.de_semnat;
+
+                    if (data.altceva > 0 ) {
+                        const alertContainer = document.querySelector('.container-fluid.py-4');
+                        const alertHTML = `<div class="alert alert-primary alert-dismissible text-white fade show mb-5" role="alert">
+                    Au fost depistate <strong>${data.altceva}</strong> contracte neconforme!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>`;
+                        alertContainer.insertAdjacentHTML('afterbegin', alertHTML);
+                    }
+
+
+                })
+                .catch(error => console.error('Error fetching event counts:', error));
+        });
+    {% endmacro %}
+
+    {% macro nextEvents() %}
+        document.addEventListener('DOMContentLoaded', function () {
+            var today = new Date();
+
+            $.ajax({
+                url: '/getEvents',
+                method: 'GET',
+                success: function (events) {
+                    var filteredEvents = events.filter(function (event) {
+                        return new Date(event.date) >= today;
+                    });
+                    filteredEvents.sort(function (a, b) {
+                        return new Date(a.date) - new Date(b.date);
+                    });
+
+                    filteredEvents.forEach(function (event) {
+                        var eventHtml = '<div class="d-flex mt-4">' +
+                            '<div class="icon icon-shape bg-gradient-dark shadow text-center">' +
+                            '<i class="material-icons opacity-10 pt-1">' + (event.event_type == "Nunta" ? "diversity_3" : "child_care") + '</i>' +
+                            '</div>' +
+                            '<div class="ms-3">' +
+                            '<div class="numbers">' +
+                            '<h6 class="mb-0 text-dark text-sm">' + event.title + '</h6>' +
+                            '<span class="text-sm">' + event.date + ', at ' + event.time + '</span>' +
+                            '<br>' +
+                            '<span class="text-sm">' + event.dancers + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                        $('.card-body.border-radius-lg.p-3').append(eventHtml);
+                    });
+                },
+                error: function (error) {
+                    console.error('Eroare la obținerea evenimentelor:', error);
+                }
+            });
+        });
+    {% endmacro %}
+
+    {% macro calendarEvents() %}
+        var hiddenButton = document.createElement("button");
+        hiddenButton.id = "open-modal-button";
+        hiddenButton.style.display = "none";
+        document.body.appendChild(hiddenButton);
+
+        var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+            initialView: "dayGridMonth",
+            headerToolbar: {
+                start: 'title',
+                center: '',
+                end: 'today prev,next'
+            },
+            selectable: false,
+            editable: true,
+            eventSources: [
+                '/getEvents'
+            ],
+            dateClick: function (info) {
+                var clickedDate = info.date;
+                var eventsOnClickedDate = calendar.getEvents().filter(function (event) {
+                    return event.start.toISOString().split('T')[0] === clickedDate.toISOString().split('T')[0];
+                });
+
+                dateClickFunction(eventsOnClickedDate)
+            },
+            eventClick: function (info) {
+                eventClickFunction(info.event.id)
+            },
+            views: {
+                month: {
+                    titleFormat: {
+                        month: "long",
+                        year: "numeric"
+                    }
+                },
+                agendaWeek: {
+                    titleFormat: {
+                        month: "long",
+                        year: "numeric",
+                        day: "numeric"
+                    }
+                },
+                agendaDay: {
+                    titleFormat: {
+                        month: "short",
+                        year: "numeric",
+                        day: "numeric"
+                    }
+                }
+            },
+        });
+        calendar.render();
+    {% endmacro %}
+
+    {% macro eventClickFunction() %}
+        function eventClickFunction(eventId) {
+            const event = calendar.getEventById(eventId);
+
+            Swal.fire({
+                html: `{{ utilityEvents.create_event() }}`,
+                showCancelButton: true,
+                confirmButtonText: 'Modifica Eveniment',
+                cancelButtonText: 'Anuleaza',
+                focusConfirm: false,
+                width: 1000,
+                preConfirm: () => {
+
+                }
+            })
+
+            document.querySelector('#date').value = event.extendedProps.eventDate
+            document.querySelector('#date').disabled = true
+            document.querySelector("#time").value = event.extendedProps.time
+            document.querySelector("#time").disabled = true
+            document.querySelector("#tip_eveniment").value = event.extendedProps.event_type
+            document.querySelector("#tip_eveniment").disabled = true
+            document.querySelector("#culoarea").value = event.backgroundColor
+            document.querySelector("#culoarea").disabled = true
+            document.querySelector("#location").value = event.extendedProps.location
+            document.querySelector("#location").disabled = true
+            document.querySelector("#street").value = event.extendedProps.location_street
+            document.querySelector("#street").disabled = true
+            document.querySelector("#location_details").value = event.extendedProps.location_details
+            document.querySelector("#location_details").disabled = true
+            document.querySelector("#miri").value = event.extendedProps.mires
+            document.querySelector("#miri").disabled = true
+            document.querySelector("#contacte_miri").value = event.extendedProps.contacts
+            document.querySelector("#contacte_miri").disabled = true
+            document.querySelector("#price").value = event.extendedProps.price
+            document.querySelector("#price").disabled = true
+            document.querySelector("#detalii_nunta").value = event.extendedProps.details
+            document.querySelector("#detalii_nunta").disabled = true
+
+            var dancersSelect = document.querySelector("#dancers");
+            var newInputGroup = document.createElement("div");
+            newInputGroup.className = "input-group input-group-static";
+            newInputGroup.innerHTML = '<label>Dansatori</label><input class="form-control text-white" type="text" id="dancers" name="dancers" data-input="" onfocus="focused(this)" onfocusout="defocused(this)">';
+            dancersSelect.parentNode.replaceChild(newInputGroup, dancersSelect);
+
+            document.querySelector("#dancers").value = event.extendedProps.dancers
+            document.querySelector("#dancers").disabled = true
+        }
+    {% endmacro %}
+
+    {% macro dateClickFunction() %}
+        function dateClickFunction(events) {
+
+            const eventsHtml = events.map(event => `
+                    <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row mb-3">
+                        <h6 class="mb-0">${event.title}, ${event.extendedProps.mires}</h6>
+                        <button type="button" onclick="eventClickFunction(${event.id})"
+                                class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto" >
+                            <i class="material-icons text-sm" aria-hidden="true">search</i>
+                        </button>
+                    </div>
+                `).join('');
+
+            Swal.fire({
+                title: 'Evenimente',
+                html: eventsHtml,
+                showCancelButton: true,
+                confirmButtonText: 'Adauga Eveniment Nou',
+                cancelButtonText: 'Anuleaza',
+                focusConfirm: false,
+
+                preConfirm: () => {
+                    document.getElementById("open-modal-button").click();
+                }
+            })
+        }
+
+        {{ utilityEvents.eveniment_nou_modal() }}
+    {% endmacro %}
+
+</script>
+
+{% macro showEventsByDayInModal() %}
+    <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+
+        <h6 class="mb-0">Nunta - Ciocarlia</h6>
+        <button type="button"
+                class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                data-bs-original-title="We do not store card details">
+            <i class="material-icons text-sm" aria-hidden="true">priority_high</i>
+        </button>
+    </div>
+{% endmacro %}

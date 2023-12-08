@@ -59,7 +59,7 @@
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <div class="input-group input-group-static mb-4">
                                         <label>Tip Eveniment</label>
                                         <select class="form-control text-white bg-dark" id="tip_eveniment" name="tip_eveniment">
@@ -71,7 +71,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <div class="input-group input-group-static mb-4">
                                         <label>Status</label>
                                         <select class="form-control text-white bg-dark" id="status" name="status">
@@ -81,6 +81,14 @@
                                             <option value="Anulat" {% if event.status == 'Anulat' %}selected{% endif %}>Anulat</option>
                                         </select>
 
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group input-group-static">
+                                        <label>Culoarea</label>
+                                        <input class="form-control  text-white" type="text" id="culoarea"
+                                               name="culoarea" value="{{ event.culoarea }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +132,7 @@
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="input-group input-group-static">
                                         <label>Mirii</label>
                                         <input class="form-control  text-white" type="text" id="miri" name="miri"
@@ -132,11 +140,19 @@
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="input-group input-group-static">
                                         <label>Contacte</label>
                                         <input class="form-control  text-white" type="text" id="contacte_miri" name="contacte_miri"
                                                value="{{ event.contacts }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Price</label>
+                                        <input class="form-control  text-white" type="text" id="price" name="price"
+                                               value="{{ event.price }}"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -376,6 +392,8 @@
                     const contacte_miri = document.getElementById('contacte_miri').value;
                     const detalii_nunta = document.getElementById('detalii_nunta').value;
                     const status = document.getElementById('status').value;
+                    const culoarea = document.getElementById('culoarea').value;
+                    const price = document.getElementById('price').value;
 
                     const moderator = document.getElementById('moderator').value;
                     const contacte_moderator = document.getElementById('contacte_moderator').value;
@@ -395,7 +413,7 @@
                         method: 'POST',
                         data: {
                             id,
-                            date, time,
+                            date, time, culoarea,price,
                             tip_eveniment,
                             location, street, location_details,
                             dancers,

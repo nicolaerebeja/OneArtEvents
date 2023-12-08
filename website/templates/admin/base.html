@@ -29,7 +29,7 @@
           type="text/css">
 
     <style>
-                .ui-autocomplete {
+        .ui-autocomplete {
             position: absolute;
             z-index: 9999;
             cursor: default;
@@ -115,7 +115,17 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">groups</i>
                     </div>
-                    <span class="nav-link-text ms-1">Users</span>
+                    <span class="nav-link-text ms-1">Dansatori</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white {% if request.path.startswith('/prestatori') %}active bg-gradient-warning{% endif %}"
+                   href="/prestatori">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">coronavirus</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Prestatori</span>
                 </a>
             </li>
 
