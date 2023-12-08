@@ -48,7 +48,40 @@
 
 {% block content %}
 
+    <div class="row mt-3">
 
+        <div class="col-2">
+            <div class="input-group input-group-static mb-4">
+                <label>Dansatori</label>
+                <select class="form-control text-white bg-dark" id="searchDansatori" name="searcDansatori"
+                        value="">
+                    <option value="" >Toate Evenimentele</option>
+                    <option value="{% print(user.first_name) %}" selected>{% print(user.first_name) %}</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="input-group input-group-static mb-4">
+                <label>Data</label>
+                <select class="form-control text-white bg-dark" id="searchDataEvents" name="searcDataEvents"
+                        value="">
+                    <option value="toate" >Toate Evenimentele</option>
+                    <option value="viitoare" selected>Evenimente Viitoare</option>
+                    <option value="trecute">Evenimente Trecute</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <button class="btn btn-outline-primary btn-sm mb-0" type="button" id="searchButton"> Cauta</button>
+            <button class="btn btn-outline-primary btn-sm mb-0 mt-sm-0 mt-1" type="button" id="resetSearch">Reset
+            </button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card mb-4 ">
@@ -57,23 +90,19 @@
                         <div>
                             <h5 class="mb-0">Toate evenimentele</h5>
                             <p class="text-sm mb-0">
-{#                                A lightweight, extendable, dependency-free javascript HTML table plugin.#}
+                                {#                                A lightweight, extendable, dependency-free javascript HTML table plugin.#}
                             </p>
                         </div>
                         <div class="ms-auto my-auto mt-lg-0 mt-4">
                             <div class="ms-auto my-auto">
 
-                                <button class="btn btn-primary btn-sm mb-0" id="open-modal-button" type="button">Eveniment Nou +</button>
+                                <button class="btn btn-primary btn-sm mb-0" id="open-modal-button" type="button">
+                                    Eveniment Nou +
+                                </button>
 
-{#                                <a href="./new-product.html" class="btn bg-gradient-primary btn-sm mb-0"#}
-{#                                   target="_blank">+&nbsp; New Product</a>#}
-                                <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
-                                        data-bs-target="#import">
-                                    Import
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1" data-type="csv"
-                                        type="button" name="button">Export
-                                </button>
+                                {#                                <a href="./new-product.html" class="btn bg-gradient-primary btn-sm mb-0"#}
+                                {#                                   target="_blank">+&nbsp; New Product</a>#}
+
                             </div>
                         </div>
                     </div>
@@ -109,14 +138,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
 {% endblock %}
-
 
 
 {% block scripts %}
@@ -126,6 +148,28 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $.ajax({
+            url: "/getDancers?date=01/01/2000",
+            method: "GET",
+            success: function (data) {
+                var searcDansatori = document.getElementById('searchDansatori');
+                for (var i = 0; i < data.length; i++) {
+                    var option = document.createElement('option');
+                    option.value = data[i].name;
+                    option.text = data[i].name;
+                    option.hidden = (data[i].name === '{% print(user.first_name) %}') ? true : false
+                    searcDansatori.appendChild(option);
+                }
+            }
+        });
+        var searchButton = document.getElementById('searchButton');
+
+        searchButton.addEventListener('click', function () {
+            table_events.ajax.reload();
+        });
+    </script>
 
     <script>
         {{ utility.eveniment_nou_modal() }}

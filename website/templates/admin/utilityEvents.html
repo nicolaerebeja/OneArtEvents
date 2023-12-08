@@ -24,12 +24,17 @@
 
             table_events = $("#table_events").DataTable({
                 responsive: false,
-                "ajax": {
-                    "url": "getEvents",
-                    "dataType": "json",
-                    "dataSrc": "",
-                    "contentType": "application/json",
-                    "error": function (error) {
+                ajax: {
+                    url: "getEvents",
+                    type: "GET",
+                    dataType: "json",
+                    dataSrc: "",
+                    data: function (d) {
+                        d.searchDansatori = $('#searchDansatori').val();
+                        d.searchDataEvents = $('#searchDataEvents').val();
+                    },
+                    contentType: "application/json",
+                    error: function (error) {
                         console.log(error);
                     }
                 },
@@ -264,10 +269,7 @@
             var $table_color = table_events.row($row).data().color;
 
             Swal.fire({
-                //title: 'Adauga Eveniment',
                 html: `{{ create_event() }}`,
-                //showCancelButton: true,
-                //cancelButtonText: 'Anuleaza',
                 width: 1000,
             })
             document.querySelector('#date').value = $table_date
@@ -282,6 +284,17 @@
             document.querySelector("#price").value = $table_price
             document.querySelector("#detalii_nunta").value = $table_details
 
+            document.querySelector('#date').disabled = true
+            document.querySelector("#time").disabled = true
+            document.querySelector("#tip_eveniment").disabled = true
+            document.querySelector("#culoarea").disabled = true
+            document.querySelector("#location").disabled = true
+            document.querySelector("#street").disabled = true
+            document.querySelector("#location_details").disabled = true
+            document.querySelector("#miri").disabled = true
+            document.querySelector("#contacte_miri").disabled = true
+            document.querySelector("#price").disabled = true
+            document.querySelector("#detalii_nunta").disabled = true
 
             var dancersSelect = document.querySelector("#dancers");
             var newInputGroup = document.createElement("div");
@@ -290,6 +303,7 @@
             dancersSelect.parentNode.replaceChild(newInputGroup, dancersSelect);
 
             document.querySelector("#dancers").value = $table_dancers
+            document.querySelector("#dancers").disabled = true
 
         }
     {% endmacro %}

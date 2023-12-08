@@ -11,7 +11,7 @@
                     document.getElementById('contracte_semnate').innerText = data.semnat;
                     document.getElementById('contracte_in_asteptare').innerText = data.de_semnat;
 
-                    if (data.altceva > 0 ) {
+                    if (data.altceva > 0) {
                         const alertContainer = document.querySelector('.container-fluid.py-4');
                         const alertHTML = `<div class="alert alert-primary alert-dismissible text-white fade show mb-5" role="alert">
                     Au fost depistate <strong>${data.altceva}</strong> contracte neconforme!
@@ -36,14 +36,18 @@
                 url: '/getEvents',
                 method: 'GET',
                 success: function (events) {
-                    var filteredEvents = events.filter(function (event) {
-                        return new Date(event.date) >= today;
-                    });
-                    filteredEvents.sort(function (a, b) {
-                        return new Date(a.date) - new Date(b.date);
-                    });
+                    var filteredEvents = events
+                        .filter(function (event) {
+                            return new Date(event.date) >= today;
+                        })
+                        .sort(function (a, b) {
+                            return new Date(a.date) - new Date(b.date);
+                        });
 
-                    filteredEvents.forEach(function (event) {
+                    var maxEventsToShow = 10;
+                    var limitedEvents = filteredEvents.slice(0, maxEventsToShow);
+
+                    limitedEvents.forEach(function (event) {
                         var eventHtml = '<div class="d-flex mt-4">' +
                             '<div class="icon icon-shape bg-gradient-dark shadow text-center">' +
                             '<i class="material-icons opacity-10 pt-1">' + (event.event_type == "Nunta" ? "diversity_3" : "child_care") + '</i>' +
@@ -202,7 +206,7 @@
 
                 preConfirm: () => {
                     document.getElementById("open-modal-button").click();
-                    var dateModal = flatpickr("#date", {  dateFormat: "d/m/Y" });
+                    var dateModal = flatpickr("#date", {dateFormat: "d/m/Y"});
                     var selectedDate = new Date(date);
                     dateModal.setDate(selectedDate);
                 }

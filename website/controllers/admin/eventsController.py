@@ -52,6 +52,7 @@ def adaugaEveniment():
         response.status_code = 400
         return response
 
+
 @login_required
 def modificaDetaliiEveniment():
     if request.method == 'POST':
@@ -114,6 +115,7 @@ def modificaDetaliiEveniment():
         event = Event.query.get(event_id)
         return render_template("admin/modifica-eveniment.html", event=event)
 
+
 def get_or_crt_loc(location, street, location_details):
     location_db = Location.query.filter_by(name=location, street=street, details=location_details).first()
     if location_db:
@@ -128,10 +130,13 @@ def get_or_crt_loc(location, street, location_details):
         db.session.commit()
         location_id = new_location
     return location_id
+
+
 def get_or_crt_pres(prestator, prestator_contacts, prestator_details, type):
     if prestator:
-        prestator_db = ServiceProvider.query.filter_by(name=prestator, contacts=prestator_contacts, details=prestator_details,
-                                                type=type).first()
+        prestator_db = ServiceProvider.query.filter_by(name=prestator, contacts=prestator_contacts,
+                                                       details=prestator_details,
+                                                       type=type).first()
         if prestator_db:
             prestator_id = prestator_db
         else:
@@ -145,6 +150,8 @@ def get_or_crt_pres(prestator, prestator_contacts, prestator_details, type):
             db.session.commit()
             prestator_id = new_prestator
         return prestator_id.id
+
+
 def convert_hour(time):
     time_str = unquote(time)
     if time_str:
@@ -156,10 +163,27 @@ def convert_hour(time):
         time_obj = datetime.strptime('08:00', '%H:%M').time()
     return time_obj
 
+
 @login_required
 def getEvents():
-    # Extrage toate evenimentele din baza de date
-    events = Event.query.all()
+    search_dansatori = request.args.get('searchDansatori')
+    search_data_events = request.args.get('searchDataEvents')
+
+    events_query = Event.query
+
+    # Filtrare după dansator (dacă este furnizat)
+    if search_dansatori:
+        events_query = events_query.filter(Event.dancers.contains(search_dansatori))
+
+    # Filtrare după data evenimentului
+    if search_data_events == 'viitoare':
+        today = datetime.now()
+        events_query = events_query.filter(Event.date >= today)
+    elif search_data_events == 'trecute':
+        today = datetime.now()
+        events_query = events_query.filter(Event.date < today)
+
+    events = events_query.all()
 
     # Converteste evenimentele în format JSON
     events_json = []
@@ -186,7 +210,7 @@ def getEvents():
             # 'end': str(event.date)+'T'+str(event.time),
             'start': str(event.date),
             'end': str(event.date),
-            'title': event.event_type + ' - ' +event.location.name,
+            'title': event.event_type + ' - ' + event.location.name,
             'color': event.culoarea,
             'eventDate': str(event.date),
             # Alte campuri pe care le ai în modelul tău Event
@@ -213,6 +237,7 @@ def getLocation():
         for location in locations
     ]
     return jsonify(locations_json)
+
 
 @login_required
 def adaugaEvenimentComplet():
