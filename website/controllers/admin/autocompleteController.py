@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import unquote
 from flask import jsonify
 from sqlalchemy import or_
@@ -101,11 +101,23 @@ def get_event_counts():
             )
         ).count()
     )
+    my_events = Event.query.filter(Event.dancers.contains(current_user.first_name)).count()
+
+    today = datetime.utcnow()
+    last_month = today - timedelta(days=30)
+
+    semnat_count_30 = Event.query.filter(Event.status == 'Semnat', Event.date >= last_month).count()
+    de_semnat_count_30 = Event.query.filter(Event.status == 'De Semnat', Event.date >= last_month).count()
+    my_events_30 = Event.query.filter(Event.dancers.contains(current_user.first_name), Event.date >= last_month).count()
 
     event_counts = {
         'semnat': semnat_count,
         'de_semnat': de_semnat_count,
         'altceva': altceva_count,
+        'my_events': my_events,
+        'semnat_30': semnat_count_30,
+        'de_semnat_30': de_semnat_count_30,
+        'my_events_30': my_events_30,
     }
 
     return jsonify(event_counts)

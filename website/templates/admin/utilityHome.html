@@ -10,6 +10,11 @@
 
                     document.getElementById('contracte_semnate').innerText = data.semnat;
                     document.getElementById('contracte_in_asteptare').innerText = data.de_semnat;
+                    document.getElementById('my_events').innerText = data.my_events;
+
+                    document.getElementById('contracte_semnate_30').innerText = data.semnat_30;
+                    document.getElementById('contracte_in_asteptare_30').innerText = data.de_semnat_30;
+                    document.getElementById('my_events_30').innerText = data.my_events_30;
 
                     if (data.altceva > 0) {
                         const alertContainer = document.querySelector('.container-fluid.py-4');

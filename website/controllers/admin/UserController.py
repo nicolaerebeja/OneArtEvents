@@ -30,3 +30,9 @@ def userIndex():
 
     all_users = User.query.all()
     return render_template("admin/users.html", users=all_users)
+
+
+@login_required
+def profilDansator(user_id):
+    user = User.query.get(user_id)
+    return render_template("admin/profil-dansator.html", dansator=user)

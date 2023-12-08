@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table align-items-center mb-0">
+                    <table class="table align-items-center mb-0" id="table_users">
                         <thead>
                         <tr>
                             <th class="text-uppercase text-xxs font-weight-bolder opacity-7">Name</th>
@@ -57,9 +57,9 @@
                                     <form method="post">
                                         <input type="hidden" name="user_id" value="{{ user.id }}">
                                         {% if user.type != 'admin' %}
-                                            <button type="submit" class="btn btn-primary btn-sm">Abilita</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Abiliteaza</button>
                                         {% endif %}
-                                            <button type="submit" class="btn btn-danger btn-sm" name="delete">Elimina
+                                        <button type="submit" class="btn btn-danger btn-sm" name="delete">Sterge
                                         </button>
                                     </form>
                                 </td>
@@ -80,4 +80,24 @@
 
 {% block scripts %}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Selectează toate rândurile din tabel
+            var rows = document.querySelectorAll('#table_users tbody tr');
+
+            // Atașează un eveniment de click la fiecare rând
+            rows.forEach(function (row) {
+                row.addEventListener('click', function () {
+                    // Obține ID-ul rândului
+                    var rowId = row.id;
+
+                    // Construiește URL-ul în funcție de ID
+                    var link = 'profil/' + rowId;
+
+                    // Deschide link-ul într-o nouă fereastră sau filă
+                    window.open(link, '_blank');
+                });
+            });
+        });
+    </script>
 {% endblock %}

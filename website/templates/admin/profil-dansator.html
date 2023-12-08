@@ -1,0 +1,711 @@
+{% extends "admin/base.html" %}
+{% set title = "Profil Dansator" %}
+
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid my-3 py-3">
+        <div class="row mb-5">
+            <div class="col-lg-3">
+                <div class="card position-sticky top-1">
+                    <ul class="nav flex-column bg-white border-radius-lg p-3">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex" data-scroll="" href="#profile">
+                                <i class="material-icons text-lg me-2">person</i>
+                                <span class="text-sm">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#basic-info">
+                                <i class="material-icons text-lg me-2">receipt_long</i>
+                                <span class="text-sm">Informații de bază</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#password">
+                                <i class="material-icons text-lg me-2">lock</i>
+                                <span class="text-sm">Schimbaţi parola</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#sessions">
+                                <i class="material-icons text-lg me-2">settings_applications</i>
+                                <span class="text-sm">Sesiuni</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#delete">
+                                <i class="material-icons text-lg me-2">delete</i>
+                                <span class="text-sm">Șterge cont</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 mt-lg-0 mt-4">
+
+                <div class="card card-body" id="profile">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-sm-auto col-4">
+                            <div class="avatar avatar-xl position-relative">
+                                <img src="../../../assets/img/bruce-mars.jpg" alt="bruce"
+                                     class="w-100 rounded-circle shadow-sm">
+                            </div>
+                        </div>
+                        <div class="col-sm-auto col-8 my-auto">
+                            <div class="h-100">
+                                <h5 class="mb-1 font-weight-bolder">
+                                    {{ dansator.first_name }}
+                                </h5>
+                                <p class="mb-0 font-weight-normal text-sm">
+                                    CEO / Co-Founder
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex">
+                            <label class="form-check-label mb-0">
+                                <small id="profileVisibility">
+                                    Comutați la invizibil
+                                </small>
+                            </label>
+                            <div class="form-check form-switch ms-2 my-auto">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" checked="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="basic-info">
+                    <div class="card-header">
+                        <h5>Informații de bază</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Nume</label>
+                                    <input type="text" class="form-control" placeholder="Alec" onfocus="focused(this)"
+                                           onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Prenume</label>
+                                    <input type="text" class="form-control" placeholder="Thompson"
+                                           onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-6">
+                                <label class="form-label mt-4 ms-0">Gen</label>
+                                <div class="choices" data-type="select-one" tabindex="0" role="combobox"
+                                     aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                    <div class="choices__inner"><select class="form-control choices__input"
+                                                                        name="choices-gender" id="choices-gender"
+                                                                        hidden="" tabindex="-1" data-choice="active">
+                                        <option value="Male">Male</option>
+                                    </select>
+                                        <div class="choices__list choices__list--single">
+                                            <div class="choices__item choices__item--selectable" data-item=""
+                                                 data-id="1" data-value="Male" data-custom-properties="null"
+                                                 aria-selected="true">Male
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="choices__list choices__list--dropdown" aria-expanded="false"><input
+                                            type="text" class="choices__input choices__input--cloned" autocomplete="off"
+                                            autocapitalize="off" spellcheck="false" role="textbox"
+                                            aria-autocomplete="list" aria-label="false" placeholder="">
+                                        <div class="choices__list" role="listbox">
+                                            <div id="choices--choices-gender-item-choice-1"
+                                                 class="choices__item choices__item--choice choices__item--selectable is-highlighted"
+                                                 role="option" data-choice="" data-id="1" data-value="Female"
+                                                 data-select-text="Press to select" data-choice-selectable=""
+                                                 aria-selected="true">Female
+                                            </div>
+                                            <div id="choices--choices-gender-item-choice-2"
+                                                 class="choices__item choices__item--choice is-selected choices__item--selectable"
+                                                 role="option" data-choice="" data-id="2" data-value="Male"
+                                                 data-select-text="Press to select" data-choice-selectable="">Male
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-5 col-5">
+                                        <label class="form-label mt-4 ms-0">Data de naștere</label>
+                                        <div class="choices" data-type="select-one" tabindex="0" role="combobox"
+                                             aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                            <div class="choices__inner"><select class="form-control choices__input"
+                                                                                name="choices-month" id="choices-month"
+                                                                                hidden="" tabindex="-1"
+                                                                                data-choice="active">
+                                                <option value="2">February</option>
+                                            </select>
+                                                <div class="choices__list choices__list--single">
+                                                    <div class="choices__item choices__item--selectable" data-item=""
+                                                         data-id="1" data-value="2" data-custom-properties="null"
+                                                         aria-selected="true">February
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="choices__list choices__list--dropdown" aria-expanded="false">
+                                                <input type="text" class="choices__input choices__input--cloned"
+                                                       autocomplete="off" autocapitalize="off" spellcheck="false"
+                                                       role="textbox" aria-autocomplete="list" aria-label="false"
+                                                       placeholder="">
+                                                <div class="choices__list" role="listbox">
+                                                    <div id="choices--choices-month-item-choice-1"
+                                                         class="choices__item choices__item--choice choices__item--selectable is-highlighted"
+                                                         role="option" data-choice="" data-id="1" data-value="4"
+                                                         data-select-text="Press to select" data-choice-selectable=""
+                                                         aria-selected="true">April
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-2"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="2" data-value="8"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        August
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-3"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="3" data-value="12"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        December
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-4"
+                                                         class="choices__item choices__item--choice is-selected choices__item--selectable"
+                                                         role="option" data-choice="" data-id="4" data-value="2"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        February
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-5"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="5" data-value="1"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        January
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-6"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="6" data-value="7"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        July
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-7"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="7" data-value="6"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        June
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-8"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="8" data-value="3"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        March
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-9"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="9" data-value="5"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        May
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-10"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="10" data-value="11"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        November
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-11"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="11" data-value="10"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        October
+                                                    </div>
+                                                    <div id="choices--choices-month-item-choice-12"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="12" data-value="9"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        September
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-3">
+                                        <label class="form-label mt-4 ms-0">&nbsp;</label>
+                                        <div class="choices" data-type="select-one" tabindex="0" role="combobox"
+                                             aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                            <div class="choices__inner"><select class="form-control choices__input"
+                                                                                name="choices-day" id="choices-day"
+                                                                                hidden="" tabindex="-1"
+                                                                                data-choice="active">
+                                                <option value="1">1</option>
+                                            </select>
+                                                <div class="choices__list choices__list--single">
+                                                    <div class="choices__item choices__item--selectable" data-item=""
+                                                         data-id="1" data-value="1" data-custom-properties="null"
+                                                         aria-selected="true">1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="choices__list choices__list--dropdown" aria-expanded="false">
+                                                <input type="text" class="choices__input choices__input--cloned"
+                                                       autocomplete="off" autocapitalize="off" spellcheck="false"
+                                                       role="textbox" aria-autocomplete="list" aria-label="false"
+                                                       placeholder="">
+                                                <div class="choices__list" role="listbox">
+                                                    <div id="choices--choices-day-item-choice-1"
+                                                         class="choices__item choices__item--choice is-selected choices__item--selectable is-highlighted"
+                                                         role="option" data-choice="" data-id="1" data-value="1"
+                                                         data-select-text="Press to select" data-choice-selectable=""
+                                                         aria-selected="true">1
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-2"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="2" data-value="2"
+                                                         data-select-text="Press to select" data-choice-selectable="">2
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-3"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="3" data-value="3"
+                                                         data-select-text="Press to select" data-choice-selectable="">3
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-4"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="4" data-value="4"
+                                                         data-select-text="Press to select" data-choice-selectable="">4
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-5"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="5" data-value="5"
+                                                         data-select-text="Press to select" data-choice-selectable="">5
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-6"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="6" data-value="6"
+                                                         data-select-text="Press to select" data-choice-selectable="">6
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-7"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="7" data-value="7"
+                                                         data-select-text="Press to select" data-choice-selectable="">7
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-8"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="8" data-value="8"
+                                                         data-select-text="Press to select" data-choice-selectable="">8
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-9"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="9" data-value="9"
+                                                         data-select-text="Press to select" data-choice-selectable="">9
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-10"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="10" data-value="10"
+                                                         data-select-text="Press to select" data-choice-selectable="">10
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-11"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="11" data-value="11"
+                                                         data-select-text="Press to select" data-choice-selectable="">11
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-12"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="12" data-value="12"
+                                                         data-select-text="Press to select" data-choice-selectable="">12
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-13"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="13" data-value="13"
+                                                         data-select-text="Press to select" data-choice-selectable="">13
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-14"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="14" data-value="14"
+                                                         data-select-text="Press to select" data-choice-selectable="">14
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-15"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="15" data-value="15"
+                                                         data-select-text="Press to select" data-choice-selectable="">15
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-16"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="16" data-value="16"
+                                                         data-select-text="Press to select" data-choice-selectable="">16
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-17"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="17" data-value="17"
+                                                         data-select-text="Press to select" data-choice-selectable="">17
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-18"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="18" data-value="18"
+                                                         data-select-text="Press to select" data-choice-selectable="">18
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-19"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="19" data-value="19"
+                                                         data-select-text="Press to select" data-choice-selectable="">19
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-20"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="20" data-value="20"
+                                                         data-select-text="Press to select" data-choice-selectable="">20
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-21"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="21" data-value="21"
+                                                         data-select-text="Press to select" data-choice-selectable="">21
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-22"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="22" data-value="22"
+                                                         data-select-text="Press to select" data-choice-selectable="">22
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-23"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="23" data-value="23"
+                                                         data-select-text="Press to select" data-choice-selectable="">23
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-24"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="24" data-value="24"
+                                                         data-select-text="Press to select" data-choice-selectable="">24
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-25"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="25" data-value="25"
+                                                         data-select-text="Press to select" data-choice-selectable="">25
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-26"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="26" data-value="26"
+                                                         data-select-text="Press to select" data-choice-selectable="">26
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-27"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="27" data-value="27"
+                                                         data-select-text="Press to select" data-choice-selectable="">27
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-28"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="28" data-value="28"
+                                                         data-select-text="Press to select" data-choice-selectable="">28
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-29"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="29" data-value="29"
+                                                         data-select-text="Press to select" data-choice-selectable="">29
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-30"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="30" data-value="30"
+                                                         data-select-text="Press to select" data-choice-selectable="">30
+                                                    </div>
+                                                    <div id="choices--choices-day-item-choice-31"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="31" data-value="31"
+                                                         data-select-text="Press to select" data-choice-selectable="">31
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-4">
+                                        <label class="form-label mt-4">&nbsp;</label>
+                                        <div class="choices" data-type="select-one" tabindex="0" role="combobox"
+                                             aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                            <div class="choices__inner"><select class="form-control choices__input"
+                                                                                name="choices-year" id="choices-year"
+                                                                                hidden="" tabindex="-1"
+                                                                                data-choice="active">
+                                                <option value="2020">2020</option>
+                                            </select>
+                                                <div class="choices__list choices__list--single">
+                                                    <div class="choices__item choices__item--selectable" data-item=""
+                                                         data-id="1" data-value="2020" data-custom-properties="null"
+                                                         aria-selected="true">2020
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="choices__list choices__list--dropdown" aria-expanded="false">
+                                                <input type="text" class="choices__input choices__input--cloned"
+                                                       autocomplete="off" autocapitalize="off" spellcheck="false"
+                                                       role="textbox" aria-autocomplete="list" aria-label="false"
+                                                       placeholder="">
+                                                <div class="choices__list" role="listbox">
+                                                    <div id="choices--choices-year-item-choice-1"
+                                                         class="choices__item choices__item--choice choices__item--selectable is-highlighted"
+                                                         role="option" data-choice="" data-id="1" data-value="1900"
+                                                         data-select-text="Press to select" data-choice-selectable=""
+                                                         aria-selected="true">1900
+                                                    </div>
+                                                    <div id="choices--choices-year-item-choice-2"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="2" data-value="1901"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        1901
+                                                    </div>
+                                                    <div id="choices--choices-year-item-choice-3"
+                                                         class="choices__item choices__item--choice choices__item--selectable"
+                                                         role="option" data-choice="" data-id="3" data-value="1902"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        1902
+                                                    </div>
+                                                    <div id="choices--choices-year-item-choice-121"
+                                                         class="choices__item choices__item--choice is-selected choices__item--selectable"
+                                                         role="option" data-choice="" data-id="121" data-value="2020"
+                                                         data-select-text="Press to select" data-choice-selectable="">
+                                                        2020
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="example@email.com"
+                                           onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Confirm Email</label>
+                                    <input type="email" class="form-control" placeholder="example@email.com"
+                                           onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Locatia</label>
+                                    <input type="text" class="form-control" placeholder="Sydney, A"
+                                           onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Număr de telefon</label>
+                                    <input type="number" class="form-control" placeholder="+40 735 631 620"
+                                           onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <label class="form-label mt-4 ms-0">Limba</label>
+                                <div class="choices" data-type="select-one" tabindex="0" role="combobox"
+                                     aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                    <div class="choices__inner"><select class="form-control choices__input"
+                                                                        name="choices-language" id="choices-language"
+                                                                        hidden="" tabindex="-1" data-choice="active">
+                                        <option value="English">English</option>
+                                    </select>
+                                        <div class="choices__list choices__list--single">
+                                            <div class="choices__item choices__item--selectable" data-item=""
+                                                 data-id="1" data-value="English" data-custom-properties="null"
+                                                 aria-selected="true">English
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="choices__list choices__list--dropdown" aria-expanded="false"><input
+                                            type="text" class="choices__input choices__input--cloned" autocomplete="off"
+                                            autocapitalize="off" spellcheck="false" role="textbox"
+                                            aria-autocomplete="list" aria-label="false" placeholder="">
+                                        <div class="choices__list" role="listbox">
+                                            <div id="choices--choices-language-item-choice-1"
+                                                 class="choices__item choices__item--choice is-selected choices__item--selectable is-highlighted"
+                                                 role="option" data-choice="" data-id="1" data-value="English"
+                                                 data-select-text="Press to select" data-choice-selectable=""
+                                                 aria-selected="true">English
+                                            </div>
+                                            <div id="choices--choices-language-item-choice-2"
+                                                 class="choices__item choices__item--choice choices__item--selectable"
+                                                 role="option" data-choice="" data-id="2" data-value="French"
+                                                 data-select-text="Press to select" data-choice-selectable="">French
+                                            </div>
+                                            <div id="choices--choices-language-item-choice-3"
+                                                 class="choices__item choices__item--choice choices__item--selectable"
+                                                 role="option" data-choice="" data-id="3" data-value="Spanish"
+                                                 data-select-text="Press to select" data-choice-selectable="">Spanish
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label mt-4">Aptitudini</label>
+                                <div class="choices" data-type="text" aria-haspopup="true" aria-expanded="false">
+                                    <div class="choices__inner is-filled"><input class="form-control choices__input"
+                                                                                 id="choices-skills" type="text"
+                                                                                 value="vuejs,angular,react"
+                                                                                 placeholder="Enter something" hidden=""
+                                                                                 tabindex="-1" data-choice="active"
+                                                                                 onfocus="focused(this)"
+                                                                                 onfocusout="defocused(this)">
+                                        <div class="choices__list choices__list--multiple">
+                                            <div class="choices__item choices__item--selectable" data-item=""
+                                                 data-id="1" data-value="vuejs" data-custom-properties="null"
+                                                 aria-selected="true" data-deletable="">Populare
+                                                <button type="button" class="choices__button"
+                                                        aria-label="Remove item: 'vuejs'" data-button="">Remove item
+                                                </button>
+                                            </div>
+                                            <div class="choices__item choices__item--selectable" data-item=""
+                                                 data-id="2" data-value="angular" data-custom-properties="null"
+                                                 aria-selected="true" data-deletable="">Retro
+                                                <button type="button" class="choices__button"
+                                                        aria-label="Remove item: 'angular'" data-button="">Remove item
+                                                </button>
+                                            </div>
+                                            <div class="choices__item choices__item--selectable" data-item=""
+                                                 data-id="3" data-value="react" data-custom-properties="null"
+                                                 aria-selected="true" data-deletable="">Dance
+                                                <button type="button" class="choices__button"
+                                                        aria-label="Remove item: 'react'" data-button="">Remove item
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="choices__input choices__input--cloned"
+                                               autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox"
+                                               aria-autocomplete="list" aria-label="false"></div>
+                                    <div class="choices__list choices__list--dropdown" aria-expanded="false"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="password">
+                    <div class="card-header">
+                        <h5>Schimbaţi parola</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="input-group input-group-outline my-4">
+                            <label class="form-label">Parolă Nouă</label>
+                            <input type="password" class="form-control" onfocus="focused(this)"
+                                   onfocusout="defocused(this)">
+                        </div>
+                        <div class="input-group input-group-outline">
+                            <label class="form-label">Confirmă noua parolă</label>
+                            <input type="password" class="form-control" onfocus="focused(this)"
+                                   onfocusout="defocused(this)">
+                        </div>
+                        <h5 class="mt-5">Cerințe de parolă</h5>
+                        <p class="text-muted mb-2">
+                           Vă rugăm să urmați acest ghid pentru o parolă puternică:
+                        </p>
+                        <ul class="text-muted ps-4 mb-0 float-start">
+                            <li>
+                                <span class="text-sm">Un caracter special</span>
+                            </li>
+                            <li>
+                                <span class="text-sm">Minim 6 caractere</span>
+                            </li>
+                            <li>
+                                <span class="text-sm">Un număr (se recomandă 2)</span>
+                            </li>
+                            <li>
+                                <span class="text-sm">Schimba-l des</span>
+                            </li>
+                        </ul>
+                        <button class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0">Actualizați parola</button>
+                    </div>
+                </div>
+
+
+                <div class="card mt-4" id="sessions">
+                    <div class="card-header pb-3">
+                        <h5>Sessions</h5>
+                        <p class="text-sm">Aceasta este o listă de dispozitive care s-au conectat la acest cont.</p>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-5">
+                                <i class="fas fa-desktop text-lg opacity-6" aria-hidden="true"></i>
+                            </div>
+                            <div class="my-auto ms-3">
+                                <div class="h-100">
+                                    <p class="text-sm mb-1">
+                                        Bucharest 68.133.163.201
+                                    </p>
+                                    <p class="mb-0 text-xs">
+                                        Your current session
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="badge badge-success badge-sm my-auto ms-auto me-3">Active</span>
+                            <p class="text-secondary text-sm my-auto me-3">EU</p>
+                            <a href="javascript:;" class="text-primary text-sm icon-move-right my-auto">See more
+                                <i class="fas fa-arrow-right text-xs ms-1" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <hr class="horizontal dark">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-5">
+                                <i class="fas fa-desktop text-lg opacity-6" aria-hidden="true"></i>
+                            </div>
+                            <p class="my-auto ms-3">Chrome on macOS</p>
+                            <p class="text-secondary text-sm ms-auto my-auto me-3">US</p>
+                            <a href="javascript:;" class="text-primary text-sm icon-move-right my-auto">See more
+                                <i class="fas fa-arrow-right text-xs ms-1" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <hr class="horizontal dark">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-5">
+                                <i class="fas fa-mobile text-lg opacity-6" aria-hidden="true"></i>
+                            </div>
+                            <p class="my-auto ms-3">Safari on iPhone</p>
+                            <p class="text-secondary text-sm ms-auto my-auto me-3">US</p>
+                            <a href="javascript:;" class="text-primary text-sm icon-move-right my-auto">See more
+                                <i class="fas fa-arrow-right text-xs ms-1" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="delete">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-sm-0 mb-4">
+                            <div class="w-50">
+                                <h5>Șterge cont</h5>
+                                <p class="text-sm mb-0">Odată ce vă ștergeți contul, nu mai există întoarcere.</p>
+                            </div>
+                            <div class="w-50 text-end">
+                                <button class="btn btn-outline-secondary mb-3 mb-md-0 ms-auto" type="button"
+                                        name="button">Dezactivați
+                                </button>
+                                <button class="btn bg-gradient-danger mb-0 ms-2" type="button" name="button">Șterge
+                                     Cont
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
