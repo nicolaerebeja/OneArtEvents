@@ -115,7 +115,7 @@
                     <span class="nav-link-text ms-1">Evenimente</span>
                 </a>
             </li>
-
+        {% if user.type == 'admin' %}
             <li class="nav-item">
                 <a class="nav-link text-white {% if request.path == '/adaugaEvenimentComplet' %}active bg-gradient-warning{% endif %} "
                    href="/adaugaEvenimentComplet">
@@ -125,6 +125,8 @@
                     <span class="nav-link-text ms-1">Eveniment Nou</span>
                 </a>
             </li>
+        {% endif %}
+
             <li class="nav-item">
                 <a class="nav-link text-white {% if request.path == '/analytics' %}active bg-gradient-warning{% endif %} "
                    href="/analytics">

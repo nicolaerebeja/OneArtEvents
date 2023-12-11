@@ -96,9 +96,12 @@
                         <div class="ms-auto my-auto mt-lg-0 mt-4">
                             <div class="ms-auto my-auto">
 
+                                {% if user.type == 'admin' %}
                                 <button class="btn btn-primary btn-sm mb-0" id="open-modal-button" type="button">
                                     Eveniment Nou +
                                 </button>
+                                {% endif %}
+
 
                                 {#                                <a href="./new-product.html" class="btn bg-gradient-primary btn-sm mb-0"#}
                                 {#                                   target="_blank">+&nbsp; New Product</a>#}

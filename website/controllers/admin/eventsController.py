@@ -118,6 +118,33 @@ def modificaDetaliiEveniment():
         event = Event.query.get(event_id)
         return render_template("admin/modifica-eveniment.html", event=event)
 
+@login_required
+def stergeEveniment():
+    if request.method == 'POST':
+        try:
+            id = request.form.get('id')
+
+            # Verifică dacă ID-ul este valid
+            if id is None or not id.isdigit():
+                return jsonify({'success': False, 'message': 'ID-ul evenimentului nu este valid.'})
+
+            id = int(id)
+
+            # Obține evenimentul din baza de date
+            event = Event.query.get(id)
+
+            if event:
+                # Șterge evenimentul
+                db.session.delete(event)
+                db.session.commit()
+
+                return jsonify({'success': True, 'message': 'Eveniment șters cu succes.'})
+            else:
+                return jsonify({'success': False, 'message': 'Evenimentul nu a fost găsit.'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'message': 'Eroare la ștergerea evenimentului: {}'.format(str(e))})
+
 
 def get_or_crt_loc(location, street, location_details):
     location_db = Location.query.filter_by(name=location, street=street, details=location_details).first()

@@ -191,7 +191,7 @@
         }
     {% endmacro %}
 
-    {% macro dateClickFunction() %}
+    {% macro dateClickFunction(user_type) %}
         function dateClickFunction(events, date) {
             const eventsHtml = events.map(event => `
                     <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row mb-3">
@@ -220,7 +220,9 @@
             })
         }
 
-        {{ utilityEvents.eveniment_nou_modal() }}
+        {% if user_type == 'admin' %}
+            {{   utilityEvents.eveniment_nou_modal()   }}
+        {% endif %}
 
 
     {% endmacro %}

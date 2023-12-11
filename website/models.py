@@ -6,11 +6,19 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True)
+    email = db.Column(db.String(150), nullable=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     type = db.Column(db.String(150))
 
+    prenume = db.Column(db.String(150), nullable=True)
+    gen = db.Column(db.String(50), nullable=True)
+    data_nastere = db.Column(db.String, nullable=True)
+    locatie = db.Column(db.String(150), nullable=True)
+    telefon = db.Column(db.String(20), nullable=True)
+    limba = db.Column(db.String(50), nullable=True)
+    aptitudini = db.Column(db.Text, nullable=True)
+    poza = db.Column(db.String(150), nullable=True)
 
 class ServiceProvider(db.Model):
     id = db.Column(db.Integer, primary_key=True)

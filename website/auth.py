@@ -16,7 +16,7 @@ def login():
         user = User.query.filter_by(first_name=first_name).first()
         if user:
             if check_password_hash(user.password, password):
-                if user.type == 'admin':
+                if user.type == 'admin' or user.type == 'dansator' :
                     flash('Logged in successfuly!')
                     login_user(user, remember=True)
                     return redirect(url_for('views.adminHome'))
@@ -25,7 +25,7 @@ def login():
             else:
                 flash('Incorrect password, try again')
         else:
-            flash('email does not exist')
+            flash('user does not exist')
     return render_template("admin/login.html", user=current_user)
 
 
