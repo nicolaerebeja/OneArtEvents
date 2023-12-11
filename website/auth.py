@@ -10,10 +10,10 @@ auth = Blueprint('auth', __name__)
 @auth.route('/admin/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        first_name = request.form.get('first_name')
         password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(first_name=first_name).first()
         if user:
             if check_password_hash(user.password, password):
                 if user.type == 'admin':
@@ -39,16 +39,13 @@ def logout():
 @auth.route('/admin/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        email = request.form.get('email')
         first_name = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(first_name=first_name).first()
         if user:
-            flash('Email already exist.', category='error')
-        if len(email) < 4:
-            flash('Email must be greater than 4 characters', category='error')
+            flash('User already exist.', category='error')
         elif len(first_name) < 2:
             flash('First Name must be greater than 2 characters', category='error')
         elif password1 != password2:
@@ -56,7 +53,7 @@ def sign_up():
         elif len(password1) < 7:
             flash('Password must be greater than 7 characters', category='error')
         else:
-            new_user = User(email=email, first_name=first_name,
+            new_user = User(first_name=first_name,
                             password=generate_password_hash(password1, method='sha256'), type='new')
             db.session.add(new_user)
             db.session.commit()

@@ -27,6 +27,7 @@ def adaugaEveniment():
     dancers_decoded = unquote(x.get('dancers'))
     culoarea = unquote(x.get('culoarea'))
     price = unquote(x.get('price'))
+    avans = unquote(x.get('avans'))
 
     location_id = get_or_crt_loc(x.get('location'), x.get('street'), x.get('location_details'))
     moderator = get_or_crt_pres(x.get('moderator'), x.get('contacte_moderator'), x.get('detalii_moderator'),
@@ -39,7 +40,7 @@ def adaugaEveniment():
     new_record = Event(date=date_obj, time=time_obj, event_type=tip_eveniment_decoded, location=location_id,
                        dancers=dancers_decoded, mires=miri_decoded, contacts=contacte_miri_decoded,
                        details=detalii_nunta_decoded, status=status_decoded, moderators_id=moderator, music_id=muzica,
-                       photo_video_id=fotoVideo, culoarea=culoarea, price=price)
+                       photo_video_id=fotoVideo, culoarea=culoarea, price=price, avans=avans)
     db.session.add(new_record)
     db.session.commit()
 
@@ -70,6 +71,7 @@ def modificaDetaliiEveniment():
             dancers_decoded = unquote(x.get('dancers'))
             culoarea = unquote(x.get('culoarea'))
             price = unquote(x.get('price'))
+            avans = unquote(x.get('avans'))
 
             location_id = get_or_crt_loc(x.get('location'), x.get('street'), x.get('location_details'))
             moderator = get_or_crt_pres(x.get('moderator'), x.get('contacte_moderator'), x.get('detalii_moderator'),
@@ -94,7 +96,8 @@ def modificaDetaliiEveniment():
                 'music_id': muzica,
                 'moderators_id': moderator,
                 'culoarea': culoarea,
-                'price': price
+                'price': price,
+                'avans': avans
             }
 
             if event:
@@ -205,6 +208,7 @@ def getEvents():
             'details': event.details,
             'status': event.status,
             'price': event.price,
+            'avans': event.avans,
 
             # 'start': str(event.date)+'T'+str(event.time),
             # 'end': str(event.date)+'T'+str(event.time),

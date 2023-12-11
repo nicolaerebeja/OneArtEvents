@@ -55,4 +55,5 @@ class Event(db.Model):
     details = db.Column(db.Text)
     culoarea = db.Column(db.Text)
     price = db.Column(db.Text)
+    avans = db.Column(db.Text)
 

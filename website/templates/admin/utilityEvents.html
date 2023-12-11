@@ -179,6 +179,12 @@
                         visible: true
                     },
                     {
+                        data: "avans",
+                        className: "avans",
+                        title: "Avans",
+                        visible: true
+                    },
+                    {
                         data: "color",
                         className: "color",
                         title: "Culoarea",
@@ -265,6 +271,7 @@
             var $table_mires = table_events.row($row).data().mires;
             var $table_contacts = table_events.row($row).data().contacts;
             var $table_price = table_events.row($row).data().price;
+            var $table_avans = table_events.row($row).data().avans;
             var $table_details = table_events.row($row).data().details;
             var $table_color = table_events.row($row).data().color;
 
@@ -282,6 +289,7 @@
             document.querySelector("#miri").value = $table_mires
             document.querySelector("#contacte_miri").value = $table_contacts
             document.querySelector("#price").value = $table_price
+            document.querySelector("#avans").value = $table_avans
             document.querySelector("#detalii_nunta").value = $table_details
 
             document.querySelector('#date').disabled = true
@@ -294,6 +302,7 @@
             document.querySelector("#miri").disabled = true
             document.querySelector("#contacte_miri").disabled = true
             document.querySelector("#price").disabled = true
+            document.querySelector("#avans").disabled = true
             document.querySelector("#detalii_nunta").disabled = true
 
             var dancersSelect = document.querySelector("#dancers");
@@ -411,10 +420,17 @@
                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class="input-group input-group-static">
                         <label>Price</label>
                         <input class="form-control text-white" type="text" id="price" name="price"
+                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+                                <div class="col-2">
+                    <div class="input-group input-group-static">
+                        <label>Avans</label>
+                        <input class="form-control text-white" type="text" id="avans" name="avans"
                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
@@ -464,6 +480,7 @@
                     const miri = document.getElementById('miri').value;
                     const contacte_miri = document.getElementById('contacte_miri').value;
                     const price = document.getElementById('price').value;
+                    const avans = document.getElementById('avans').value;
                     const detalii_nunta = document.getElementById('detalii_nunta').value;
                     const status = document.getElementById('status').value;
                     const culoarea = document.getElementById('culoarea').value;
@@ -482,6 +499,7 @@
                             miri,
                             contacte_miri,
                             price,
+                            avans,
                             detalii_nunta,
                             status,
                             culoarea

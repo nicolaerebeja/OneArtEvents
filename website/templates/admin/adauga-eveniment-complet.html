@@ -137,11 +137,19 @@
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-2">
                                     <div class="input-group input-group-static">
                                         <label>Pret</label>
                                         <input class="form-control text-white" type="text" id="price"
                                                name="price" value=""
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                                                <div class="col-2">
+                                    <div class="input-group input-group-static">
+                                        <label>Avans</label>
+                                        <input class="form-control text-white" type="text" id="avans"
+                                               name="avans" value=""
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -403,6 +411,7 @@ $(function () {
                     const status = document.getElementById('status').value;
                     const culoarea = document.getElementById('culoarea').value;
                     const price = document.getElementById('price').value;
+                    const avans = document.getElementById('avans').value;
 
 
                     const moderator = document.getElementById('moderator').value;
@@ -423,7 +432,7 @@ $(function () {
                         url: '/adaugaEveniment',
                         method: 'POST',
                         data: {
-                            date, time, culoarea, price,
+                            date, time, culoarea, price, avans,
                             tip_eveniment,
                             location, street, location_details,
                             dancers,

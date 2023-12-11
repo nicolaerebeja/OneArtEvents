@@ -10,7 +10,7 @@ from .controllers.admin.autocompleteController import getLocation, getDancers, g
 
 from .controllers.HomeController import home
 
-from .controllers.admin.AnalyticsController import analytics
+from .controllers.admin.AnalyticsController import analytics, countEventsMonth, countEventsXDancers
 
 views = Blueprint('views', __name__)
 
@@ -33,3 +33,5 @@ views.route('/getPrestator', methods=['GET'])(getPrestator)
 views.route('/getEventCounts', methods=['GET'])(get_event_counts)
 
 views.route('/analytics', methods=['GET'])(analytics)
+views.route('/analytics/countEventsMonth', methods=['GET'])(countEventsMonth)
+views.route('/analytics/countEventsXDancers', methods=['GET'])(countEventsXDancers)

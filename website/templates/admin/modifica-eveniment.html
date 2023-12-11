@@ -148,11 +148,19 @@
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-2">
                                     <div class="input-group input-group-static">
                                         <label>Price</label>
                                         <input class="form-control  text-white" type="text" id="price" name="price"
                                                value="{{ event.price }}"
+                                               data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                </div>
+                                                                <div class="col-2">
+                                    <div class="input-group input-group-static">
+                                        <label>Avans</label>
+                                        <input class="form-control  text-white" type="text" id="avans" name="avans"
+                                               value="{{ event.avans }}"
                                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                                     </div>
                                 </div>
@@ -401,6 +409,7 @@
                     const status = document.getElementById('status').value;
                     const culoarea = document.getElementById('culoarea').value;
                     const price = document.getElementById('price').value;
+                    const avans = document.getElementById('avans').value;
 
                     const moderator = document.getElementById('moderator').value;
                     const contacte_moderator = document.getElementById('contacte_moderator').value;
@@ -420,7 +429,7 @@
                         method: 'POST',
                         data: {
                             id,
-                            date, time, culoarea,price,
+                            date, time, culoarea,price,avans,
                             tip_eveniment,
                             location, street, location_details,
                             dancers,

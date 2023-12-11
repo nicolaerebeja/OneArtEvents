@@ -1,0 +1,519 @@
+{% extends "admin/base.html" %}
+{% set title = "Analytics" %}
+
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid my-3 py-3">
+        <div class="row mb-5">
+            <div class="col-lg-3">
+                <div class="card position-sticky top-1">
+                    <ul class="nav flex-column bg-white border-radius-lg p-3">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex" data-scroll="" href="#Statistici_generale">
+                                <i class="material-icons text-lg me-2">person</i>
+                                <span class="text-sm">Statistici generale</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Statistici_pe_perioadă">
+                                <i class="material-icons text-lg me-2">receipt_long</i>
+                                <span class="text-sm">Statistici pe perioadă</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Analiza_evenimentelor">
+                                <i class="material-icons text-lg me-2">lock</i>
+                                <span class="text-sm">Analiza evenimentelor</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Analiza_Dansatorilor">
+                                <i class="material-icons text-lg me-2">settings_applications</i>
+                                <span class="text-sm">Analiza Dansatorilor</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Analiza_veniturilor">
+                                <i class="material-icons text-lg me-2">delete</i>
+                                <span class="text-sm">Analiza veniturilor</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Analiza_stării_evenimentelor">
+                                <i class="material-icons text-lg me-2">delete</i>
+                                <span class="text-sm">Analiza stării evenimentelor</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Analiza_locatiilor">
+                                <i class="material-icons text-lg me-2">delete</i>
+                                <span class="text-sm">Analiza locațiilor</span>
+                            </a>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <a class="nav-link d-flex" data-scroll="" href="#Grafice_vizuale">
+                                <i class="material-icons text-lg me-2">delete</i>
+                                <span class="text-sm">Grafice vizuale</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 mt-lg-0 mt-4">
+
+                <div class="card mt-4" id="Statistici_generale">
+                    <div class="card-header">
+                        <h5>Statistici generale (FAKE)</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-7 text-start">
+                                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Evenimente
+                                                    desfășurate</p>
+                                                <h5 class="font-weight-bolder mb-0">
+                                                    20
+                                                </h5>
+                                                <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+55% <span
+                                                        class="font-weight-normal text-secondary">since last month</span></span>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="dropdown text-end">
+                                                    <a href="javascript:;" class="cursor-pointer text-secondary"
+                                                       id="dropdownUsers1" data-bs-toggle="dropdown"
+                                                       aria-expanded="false">
+                                                        <span class="text-xs text-secondary">6 May - 7 May</span>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3"
+                                                        aria-labelledby="dropdownUsers1">
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 7 days</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last week</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 30 days</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mt-sm-0 mt-4">
+                                <div class="card">
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-7 text-start">
+                                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Dansatori
+                                                    implicați</p>
+                                                <h5 class="font-weight-bolder mb-0">
+                                                    15
+                                                </h5>
+                                                <span class="text-sm text-end text-success font-weight-bolder mt-auto mb-0">+12% <span
+                                                        class="font-weight-normal text-secondary">since last month</span></span>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="dropdown text-end">
+                                                    <a href="javascript:;" class="cursor-pointer text-secondary"
+                                                       id="dropdownUsers2" data-bs-toggle="dropdown"
+                                                       aria-expanded="false">
+                                                        <span class="text-xs text-secondary">6 May - 7 May</span>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3"
+                                                        aria-labelledby="dropdownUsers2">
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 7 days</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last week</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 30 days</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mt-sm-0 mt-4">
+                                <div class="card">
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-7 text-start">
+                                                <p class="text-sm mb-1 text-capitalize font-weight-bold">Locații</p>
+                                                <h5 class="font-weight-bolder mb-0">
+                                                    16
+                                                </h5>
+                                                <span class="font-weight-normal text-secondary text-sm"><span
+                                                        class="font-weight-bolder text-success">+10</span> since last month</span>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="dropdown text-end">
+                                                    <a href="javascript:;" class="cursor-pointer text-secondary"
+                                                       id="dropdownUsers3" data-bs-toggle="dropdown"
+                                                       aria-expanded="false">
+                                                        <span class="text-xs text-secondary">6 May - 7 May</span>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3"
+                                                        aria-labelledby="dropdownUsers3">
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 7 days</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last week</a></li>
+                                                        <li><a class="dropdown-item border-radius-md"
+                                                               href="javascript:;">Last 30 days</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card mt-4" id="Statistici_pe_perioadă">
+                    <div class="card-header">
+                        <h5>Statistici pe perioadă (REAL)</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="card mb-3">
+                            <div class="card-body p-3">
+                                <div class="chart">
+                                    <canvas id="evenimenteXluna" class="chart-canvas" height="100px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body p-3">
+                                <div class="chart">
+                                    <canvas id="evenimenteTotale" class="chart-canvas" height="100px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card mt-4" id="Analiza_evenimentelor">
+                    <div class="card-header">
+                        <h5>Analiza evenimentelor (FAKE)</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="card-body d-flex p-3 pt-0">
+                            <div class="chart w-50">
+                                <canvas id="pie-chart" class="chart-canvas" height="269" width="358"
+                                        style="display: block; box-sizing: border-box; height: 300px; width: 397.8px;"></canvas>
+                            </div>
+                            <div class="w-50 my-auto ms-5">
+<span class="badge badge-lg badge-dot me-4 d-block text-start">
+<i class="bg-info"></i>
+<span class="">Facebook</span>
+</span>
+                                <span class="badge badge-lg badge-dot me-4 d-block text-start">
+<i class="bg-primary"></i>
+<span class="">Direct</span>
+</span>
+                                <span class="badge badge-lg badge-dot me-4 d-block text-start">
+<i class="bg-dark"></i>
+<span class="">Organic</span>
+</span>
+                                <span class="badge badge-lg badge-dot me-4 d-block text-start">
+<i class="bg-secondary"></i>
+<span class="">Referral</span>
+</span>
+                                <p class="text-sm mt-3">
+                                    More than <b>1,200,000</b> sales are made using referral marketing, and
+                                    <b>700,000</b> are from social media.
+                                </p>
+                                <a class="btn bg-gradient-secondary mb-0" href="javascript:;">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="Analiza_Dansatorilor">
+                    <div class="card-header">
+                        <h5>Analiza Dansatorilor (REAL)</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <canvas id="eventsXDancers" class="chart-canvas" height="305" width="1029"
+                                style="display: block; box-sizing: border-box; height: 340px; width: 1143.6px;"></canvas>
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="Analiza_veniturilor">
+                    <div class="card-header">
+                        <h5>Analiza veniturilor</h5>
+                    </div>
+                    <div class="card-body pt-0">
+
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="Analiza_stării_evenimentelor">
+                    <div class="card-header">
+                        <h5>Analiza stării evenimentelor</h5>
+                    </div>
+                    <div class="card-body pt-0">
+
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="Analiza_locatiilor">
+                    <div class="card-header">
+                        <h5>Analiza locatiilor</h5>
+                    </div>
+                    <div class="card-body pt-0">
+
+                    </div>
+                </div>
+
+                <div class="card mt-4" id="Grafice_vizuale">
+                    <div class="card-header">
+                        <h5>Grafice vizuale (FAKE)</h5>
+                    </div>
+                    <div class="card-body pt-0">
+
+                        <div class="card mb-3">
+                            <div class="card-body p-3">
+                                <div class="chart">
+                                    <canvas id="myChart" class="chart-canvas" height="100px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    {#    <script src="/static/admin/dashboard/assets/js/plugins/chartjs.min.js"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+
+    {#    evenimenteXluna#}
+    <script>
+        fetch('/analytics/countEventsMonth')
+            .then(response => response.json())
+            .then(data => {
+                // Aici ai acces la date sub formă de obiect JSON
+                countEventsMonthUpdateChart(data);
+
+                const cumulativeData = {};
+                let totalEvents = 0;
+
+                Object.keys(data).forEach(month => {
+                    totalEvents += data[month];
+                    cumulativeData[month] = totalEvents;
+                });
+
+                // Actualizează graficul folosind datele cumulative
+                countEventsMonthUpdateLineChart(cumulativeData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        function countEventsMonthUpdateChart(data) {
+            var ctx = document.getElementById('evenimenteXluna').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),  // Cheile (lunile) vor fi etichetele barelor
+                    datasets: [{
+                        label: 'Număr evenimente pe lună',
+                        data: Object.values(data),  // Valorile vor fi înălțimile barelor
+                        backgroundColor: 'rgba(203,10,10,0.57)',
+                        borderColor: 'rgb(255,0,0)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                        }
+                    }
+                },
+            });
+        }
+
+        function countEventsMonthUpdateLineChart(data) {
+            var ctx = document.getElementById('evenimenteTotale').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Număr total acumulativ de evenimente',
+                        data: Object.values(data),
+                        fill: false,
+                        borderColor: 'rgb(255,0,0)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        fetch('/analytics/countEventsXDancers')
+            .then(response => response.json())
+            .then(data => {
+                // Transformă datele în format potrivit pentru Chart.js
+                const labels = Object.keys(data);
+                const values = Object.values(data);
+
+                // Sortează datele în ordine crescătoare
+                const sortedIndices = values.map((value, index) => index).sort((a, b) => values[a] - values[b]);
+                const sortedLabels = sortedIndices.map(index => labels[index]);
+                const sortedValues = sortedIndices.map(index => values[index]);
+
+                // Actualizează chart-ul
+                updateHorizontalBarChart(sortedLabels, sortedValues);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        function updateHorizontalBarChart(labels, values) {
+            var ctx = document.getElementById('eventsXDancers').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Număr de evenimente pe dansator',
+                        data: values,
+                        backgroundColor: 'rgba(141,15,15,0.6)',
+                        borderColor: 'rgb(213,3,3)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+
+        <script>
+        // Datele pentru pie chart
+        var data = {
+            labels: ['Referal', 'Facebook', 'Direct', 'Organic'],
+            datasets: [{
+                data: [60, 15, 20, 12],
+                backgroundColor: ['#344767', '#1a73e8', '#e91e63', '#344767'],
+            }]
+        };
+
+        // Configurații pentru pie chart
+        var options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            },
+            maintainAspectRatio: false,
+            aspectRatio: 1,
+        };
+
+        // Obține contextul canvasului
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+
+        // Creează pie chart
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    </script>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}
