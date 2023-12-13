@@ -24,8 +24,9 @@ class ServiceProvider(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
     type = db.Column(db.String(255), nullable=False)
-    contacts = db.Column(db.String(255))
-    details = db.Column(db.String(255))
+    contacts = db.Column(db.String(255), nullable=True)
+    details = db.Column(db.String(255), nullable=True)
+    poza = db.Column(db.String(150), nullable=True)
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)

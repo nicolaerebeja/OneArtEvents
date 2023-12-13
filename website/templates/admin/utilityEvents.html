@@ -64,9 +64,9 @@
                         }
                         document.getElementById("table_events").innerHTML = "<div style='text-align:center;'><h2>Nu a fost gasit nici un eveniment</h2></div>";
                     } else {
-                        $(".vezi_detalii_eveniment").on("click", arataDetaliiEveniment);
-                        $(".modifica_detalii_eveniment").on("click", modificaDetaliiEveniment);
-                        $(".sterge_eveniment").on("click", arataDetaliiEveniment);
+                        $(".tabel-container").on("click", ".vezi_detalii_eveniment", arataDetaliiEveniment);
+                        $(".tabel-container").on("click", ".modifica_detalii_eveniment", modificaDetaliiEveniment);
+                        $(".tabel-container").on("click", ".sterge_eveniment", arataDetaliiEveniment);
                     }
 
                 },
@@ -189,7 +189,7 @@
                         className: "color",
                         title: "Culoarea",
                         visible: true,
-                        render: function (data){
+                        render: function (data) {
                             //return '<span style="color:'+data+'">'+data+'</span>'
                             return data
                         }
@@ -199,13 +199,13 @@
                         className: "status",
                         title: "Status",
                         visible: true,
-                        render: function (data){
+                        render: function (data) {
                             if (data === 'Semnat') {
-                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button><span>'+data+'</span></div>'
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button><span>' + data + '</span></div>'
                             } else if (data === 'De Semnat') {
-                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-white mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">pending</i></button><span>'+data+'</span></div>'
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-white mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">pending</i></button><span>' + data + '</span></div>'
                             } else {
-                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">clear</i></button><span>'+data+'</span></div>'
+                                return '<div class="d-flex align-items-center"><button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">clear</i></button><span>' + data + '</span></div>'
                             }
                         }
                     },
@@ -241,6 +241,13 @@
 
 
                 ],
+                "createdRow": function (row, data, dataIndex) {
+
+                    $(row).on("click", ".vezi_detalii_eveniment", arataDetaliiEveniment);
+                    $(row).on("click", ".modifica_detalii_eveniment", modificaDetaliiEveniment);
+                    $(row).on("click", ".sterge_eveniment", arataDetaliiEveniment);
+
+                },
                 "select": {
                     style: "single"
                 },
@@ -264,6 +271,7 @@
             var $table_date = table_events.row($row).data().date;
             var $table_time = table_events.row($row).data().time;
             var $table_event_type = table_events.row($row).data().event_type;
+            var $table_status = table_events.row($row).data().status;
             var $table_location_street = table_events.row($row).data().location_street;
             var $table_location_details = table_events.row($row).data().location_details;
             var $table_location = table_events.row($row).data().location;
@@ -282,6 +290,7 @@
             document.querySelector('#date').value = $table_date
             document.querySelector("#time").value = $table_time
             document.querySelector("#tip_eveniment").value = $table_event_type
+            document.querySelector("#status").value = $table_status
             document.querySelector("#culoarea").value = $table_color
             document.querySelector("#location").value = $table_location
             document.querySelector("#street").value = $table_location_street
@@ -427,7 +436,7 @@
                                data-input="" onfocus="focused(this)" onfocusout="defocused(this)">
                     </div>
                 </div>
-                                <div class="col-2">
+                <div class="col-2">
                     <div class="input-group input-group-static">
                         <label>Avans</label>
                         <input class="form-control text-white" type="text" id="avans" name="avans"
@@ -470,6 +479,7 @@
                 allowOutsideClick: false,
                 width: 1000,
                 preConfirm: () => {
+
                     const date = document.getElementById('date').value;
                     const time = document.getElementById('time').value;
                     const tip_eveniment = document.getElementById('tip_eveniment').value;
@@ -505,11 +515,17 @@
                             culoarea
                         },
                         success: function (response) {
-                            try { table_events.ajax.reload()
-                            }catch (e) { console.log(e) }
+                            try {
+                                table_events.ajax.reload()
+                            } catch (e) {
+                                console.log(e)
+                            }
 
-                            try { calendar.refetchEvents();
-                            }catch (e) { console.log(e) }
+                            try {
+                                calendar.refetchEvents();
+                            } catch (e) {
+                                console.log(e)
+                            }
 
                             Swal.fire('Eveniment adaugat cu succes!', '', 'success');
                         },
@@ -524,6 +540,8 @@
                     window.open("/adaugaEvenimentComplet", "_blank");
                 }
             });
+
+            flatpickr("#date", {dateFormat: "d/m/Y"});
 
             $(function () {
                 $("#location").autocomplete({

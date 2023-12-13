@@ -8,29 +8,6 @@ from website.models import db, User
 
 @login_required
 def userIndex():
-    if request.method == 'POST':
-        try:
-            user_id = request.form.get('user_id')
-
-            user = User.query.get(user_id)
-
-            if user:
-                if 'delete' in request.form:
-                    db.session.delete(user)
-                else:
-                    if user.type == 'new':
-                        user.type = 'admin'
-
-                db.session.commit()
-
-                return redirect(url_for('views.userIndex'))
-            else:
-                return jsonify({'message': 'Error'}), 404
-
-        except Exception as e:
-            return jsonify({'message': 'Error', 'error_details': str(e)}), 500
-
-
     all_users = User.query.all()
     return render_template("admin/users.html", users=all_users)
 

@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 from .controllers.admin.AdminHomeController import adminHome
+from .controllers.admin.PrestatoriController import prestatori, getAllPrestatori, adaugaPrestator
 from .controllers.admin.UserController import userIndex, profilDansator, userUpdate, upload_image
 
 from .controllers.admin.eventsController import eventsIndex, adaugaEveniment, getEvents, modificaDetaliiEveniment, \
@@ -38,3 +39,7 @@ views.route('/getEventCounts', methods=['GET'])(get_event_counts)
 views.route('/analytics', methods=['GET'])(analytics)
 views.route('/analytics/countEventsMonth', methods=['GET'])(countEventsMonth)
 views.route('/analytics/countEventsXDancers', methods=['GET'])(countEventsXDancers)
+
+views.route('/prestatori', methods=['GET'])(prestatori)
+views.route('/getAllPrestatori', methods=['GET'])(getAllPrestatori)
+views.route('/adaugaPrestator', methods=['POST'])(adaugaPrestator)

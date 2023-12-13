@@ -23,7 +23,7 @@ def countEventsMonth():
     # Filtrare evenimente în ultimul an
     events = (
         Event.query
-        .filter(Event.status == 'Semnat', Event.date >= '2023-01-01', Event.date <= '2023-12-31')
+        .filter(Event.status == 'Semnat', Event.date >= '2024-01-01', Event.date <= '2024-12-31')
         .with_entities(func.extract('month', Event.date).label('month'), func.count().label('event_count'))
         .group_by(func.extract('month', Event.date))
         .all()
@@ -45,7 +45,7 @@ def countEventsXDancers():
     # Numără aparițiile fiecărui dansator în toate evenimentele
     for event in events:
         dancers = event.dancers.split(',')
-        dancer_counter.update(dancers)
+        dancer_counter.update(dancer for dancer in dancers if dancer.strip())  # Exclude stringurile vide
 
     # Converteste rezultatul într-un dicționar
     result = dict(dancer_counter)

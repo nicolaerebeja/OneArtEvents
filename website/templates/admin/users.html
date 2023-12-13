@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
-{% block title1 %}Users{% endblock %}
-{% block title %}Users{% endblock %}
+{% set title = "Dansatori" %}
+
 
 {% block style %}
     <style>
@@ -20,10 +20,10 @@
                     <table class="table align-items-center mb-0" id="table_users">
                         <thead>
                         <tr>
-                            <th class="text-uppercase text-xxs font-weight-bolder opacity-7">Name</th>
+                            <th class="text-uppercase text-xxs font-weight-bolder opacity-7">Nume</th>
                             <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                            <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Telefon</th>
                             <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
-                            <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2"></th>
 
                         </tr>
                         </thead>
@@ -34,12 +34,19 @@
                                 <td>
                                     <div class="d-flex px-2 py-1">
                                         <div>
-                                            <img src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"
-                                                 class="avatar avatar-sm me-3"
-                                                 alt="avatar image">
+                                            {% if user.poza %}
+                                                <img src="/{{ user.poza.replace('website/', '') }}"
+                                                     class="avatar avatar-sm me-3"
+                                                     alt="avatar image">
+                                            {% else  %}
+                                                <img src="static/admin/logo.png"
+                                                     class="avatar avatar-sm me-3"
+                                                     alt="avatar image">
+                                            {% endif %}
+
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 font-weight-normal text-sm">{{ user.first_name }}</h6>
+                                            <h6 class="mb-0 font-weight-normal text-sm">{{ user.first_name }} {{ user.prenume }}</h6>
                                         </div>
                                     </div>
                                 </td>
@@ -47,21 +54,17 @@
                                     <p class="text-sm font-weight-normal mb-0">{{ user.email }}</p>
                                 </td>
                                 <td>
+                                    <p class="text-sm font-weight-normal mb-0">{{ user.telefon }}</p>
+                                </td>
+                                <td>
                                     <span class="badge badge-dot me-4">
                                     <i class="bg-info"></i>
-                                    <span class="text-dark text-xs">{{ user.type }}</span>
+                                    <span class="text-white text-xs">{{ user.type }}</span>
                                     </span>
                                 </td>
 
                                 <td>
-                                    <form method="post">
-                                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                                        {% if user.type != 'admin' %}
-                                            <button type="submit" class="btn btn-primary btn-sm">Abiliteaza</button>
-                                        {% endif %}
-                                        <button type="submit" class="btn btn-danger btn-sm" name="delete">Sterge
-                                        </button>
-                                    </form>
+
                                 </td>
 
                             </tr>
