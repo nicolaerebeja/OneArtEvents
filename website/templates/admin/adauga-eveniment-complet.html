@@ -9,6 +9,18 @@
         tr[id] {
             cursor: pointer;
         }
+
+        @media (max-width: 767px) {
+    /* Stiluri pentru ecrane cu lățime maximă de 767px (telefoane) */
+
+    .row {
+        flex-direction: column;
+    }
+
+    .col-4, .col-2 {
+        width: 100%;
+    }
+}
     </style>
 {% endblock %}
 
@@ -73,7 +85,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                                                <div class="col-2">
+                                 <div class="col-2">
                                     <div class="input-group input-group-static">
                                         <label>Culoarea</label>
                                         <input class="form-control flatpickr-input text-white" type="text" id="culoarea"
@@ -82,6 +94,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="row mt-3">
                                 <div class="col-4">
                                     <div class="input-group input-group-static">

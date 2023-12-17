@@ -115,17 +115,17 @@
                     <span class="nav-link-text ms-1">Evenimente</span>
                 </a>
             </li>
-        {% if user.type == 'admin' %}
-            <li class="nav-item">
-                <a class="nav-link text-white {% if request.path == '/adaugaEvenimentComplet' %}active bg-gradient-warning{% endif %} "
-                   href="/adaugaEvenimentComplet">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">add</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Eveniment Nou</span>
-                </a>
-            </li>
-        {% endif %}
+            {% if user.type == 'admin' %}
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.path == '/adaugaEvenimentComplet' %}active bg-gradient-warning{% endif %} "
+                       href="/adaugaEvenimentComplet">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">add</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Eveniment Nou</span>
+                    </a>
+                </li>
+            {% endif %}
 
             <li class="nav-item">
                 <a class="nav-link text-white {% if request.path == '/analytics' %}active bg-gradient-warning{% endif %} "
@@ -157,6 +157,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link text-white {% if request.path.startswith('/absente-repetitii') %}active bg-gradient-warning{% endif %}"
+                   href="/absente-repetitii">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">directions_run</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Absente Repetitii</span>
+                </a>
+            </li>
             <hr class="horizontal light mt-0 mb-2">
 
         </ul>

@@ -24,25 +24,6 @@
             box-sizing: border-box;
         }
 
-        #table_events {
-            width: 100%;
-            table-layout: fixed;
-            /* word-break: break-all !important;
-            white-space: normal !important; */
-        }
-
-        #table_events tbody td {
-            word-break: break-all;
-            vertical-align: top;
-            white-space: normal !important;
-        }
-
-        #table_events thead th {
-            word-break: normal !important;
-            vertical-align: top;
-            white-space: normal !important;
-        }
-
     </style>
 {% endblock %}
 
@@ -50,19 +31,24 @@
 
     <div class="row mt-3">
 
-        <div class="col-2">
+        <div class="col-auto">
             <div class="input-group input-group-static mb-4">
                 <label>Dansatori</label>
                 <select class="form-control text-white bg-dark" id="searchDansatori" name="searcDansatori"
                         value="">
-                    <option value="" >Toate Evenimentele</option>
-                    <option value="{% print(user.first_name) %}" selected>{% print(user.first_name) %}</option>
+                    {% if user.type == 'admin' %}
+                        <option value="" selected>Toti Dansatorii</option>
+                        <option value="{% print(user.first_name) %}" >{% print(user.first_name) %}</option>
+                    {% else %}
+                        <option value="" selected>Toti Dansatorii</option>
+                        <option value="{% print(user.first_name) %}" selected>{% print(user.first_name) %}</option>
+                    {% endif %}
 
                 </select>
             </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-auto">
             <div class="input-group input-group-static mb-4">
                 <label>Data</label>
                 <select class="form-control text-white bg-dark" id="searchDataEvents" name="searcDataEvents"
@@ -76,7 +62,7 @@
 
     </div>
     <div class="row mb-3">
-        <div class="col-2">
+        <div class="col-auto">
             <button class="btn btn-outline-primary btn-sm mb-0" type="button" id="searchButton"> Cauta</button>
             <button class="btn btn-outline-primary btn-sm mb-0 mt-sm-0 mt-1" type="button" id="resetSearch">Reset
             </button>

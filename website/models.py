@@ -20,6 +20,9 @@ class User(db.Model, UserMixin):
     aptitudini = db.Column(db.Text, nullable=True)
     poza = db.Column(db.String(150), nullable=True)
 
+    # relationship
+    repetitii = db.relationship('Repetitii', backref='user_repetitii', lazy=True)
+
 class ServiceProvider(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
@@ -66,3 +69,12 @@ class Event(db.Model):
     price = db.Column(db.Text)
     avans = db.Column(db.Text)
 
+
+
+class Repetitii(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.Date, default=datetime.utcnow, nullable=False)
+    detalii = db.Column(db.Text, nullable=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='repetitii_user', lazy=True, foreign_keys=[user_id])
