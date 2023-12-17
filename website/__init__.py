@@ -5,23 +5,25 @@ from flask_login import LoginManager, current_user
 from datetime import date
 from urllib.parse import quote_plus
 
+
+
 db = SQLAlchemy()
 DB_NAME_OLD = "database.db"
-
+# Detalii de conexiune la baza de date MySQL
 DB_NAME = 'gnmmd_afoa'
 DB_USER = 'gnmmd_afoa'
 DB_PASS = 'jS?%PLoJw7QW'
-DB_HOST = '195.178.106.105'
+DB_HOST = '127.0.0.1'
 DB_PORT = '3306'  # Portul implicit pentru MySQL
 
-# Construirea șirului de conexiune pentru SQLAlchemy
-db_uri = f'mysql://{quote_plus(DB_USER)}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'degrsgmitmov rfrfrfr'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME_OLD}'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{quote_plus(DB_USER)}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME_OLD}'
 
     db.init_app(app)
 
