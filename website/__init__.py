@@ -20,10 +20,10 @@ DB_PORT = '3306'  # Portul implicit pentru MySQL
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'degrsgmitmov rfrfrfr'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{quote_plus(DB_USER)}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{quote_plus(DB_USER)}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME_OLD}'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME_OLD}'
 
     db.init_app(app)
 
