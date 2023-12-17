@@ -28,6 +28,10 @@
           rel="stylesheet"
           type="text/css">
 
+    <link href="{{ url_for('static', filename='/admin/css/style.css') }} "
+          rel="stylesheet"
+          type="text/css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
 
@@ -88,11 +92,27 @@
 }
 </style>
 
+
     {% block style %} {% endblock %}
 
 </head>
 
 <body class="g-sidenav-show  bg-gray-200 dark-version">
+
+<div class="action" onclick="actionToggle();">
+
+    <span>+</span>
+
+    <ul>
+
+      <li> <a href="javascript:;" class="evenimentNou"><i class="material-icons opacity-10">format_list_bulleted</i></a>Eveniment Nou</li>
+      <li> <a href="javascript:;" class="prestatorNou"><i class="material-icons opacity-10">coronavirus</i></a>Prestator Nou</li>
+      <li> <a href="javascript:;" class="dansatorNou"><i class="material-icons opacity-10">groups</i></a>Dansator Nou</li>
+
+    </ul>
+
+  </div>
+
 <aside
         class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark ps ps--active-y"
         id="sidenav-main">
@@ -276,13 +296,7 @@
 
 {% block scripts %} {% endblock %}
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        flatpickr("#date", {
-            dateFormat: "d/m/Y", // Setează formatul dorit (dd/mm/yyyy)
-        });
-    });
-</script>
+<script src="{{ url_for('static', filename='/admin/js/utility.js') }} "></script>
 
 </body>
 

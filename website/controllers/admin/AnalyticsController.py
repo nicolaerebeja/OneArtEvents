@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timedelta
 
 from flask import request, flash, render_template, jsonify, redirect, url_for
@@ -5,7 +6,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import func
 from collections import Counter
 
-from website.models import Event
+from website.models import Event, User
 
 
 @login_required
@@ -14,6 +15,7 @@ def analytics():
 
 @login_required
 def countEventsMonth():
+    year = request.args.get('year')
     # Obține data curentă
     today = datetime.utcnow()
 
@@ -23,7 +25,7 @@ def countEventsMonth():
     # Filtrare evenimente în ultimul an
     events = (
         Event.query
-        .filter(Event.status == 'Semnat', Event.date >= '2024-01-01', Event.date <= '2024-12-31')
+        .filter(Event.status == 'Semnat', Event.date >= year+'-01-01', Event.date <= year+'-12-31')
         .with_entities(func.extract('month', Event.date).label('month'), func.count().label('event_count'))
         .group_by(func.extract('month', Event.date))
         .all()
@@ -51,3 +53,22 @@ def countEventsXDancers():
     result = dict(dancer_counter)
 
     return jsonify(result)
+
+def countStatisticiGenerale():
+    year = request.args.get('year')
+
+    evenimente = Event.query.filter((Event.date >= f'{year}-01-01') & (Event.date <= f'{year}-12-31')).count()
+
+    dansatori = User.query.count()
+
+    price_obj = Event.query.filter((Event.date >= f'{year}-01-01') & (Event.date <= f'{year}-12-31')).all()
+    price = [int(re.sub(r'\D', '', event.price)) if event.price else 0 for event in price_obj]
+    venit = sum(price)
+
+    data = {
+        'evenimente': evenimente,
+        'venit': venit,
+        'dansatori': dansatori
+    }
+
+    return jsonify(data)
