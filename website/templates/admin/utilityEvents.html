@@ -576,7 +576,7 @@
                     }
                 }).autocomplete("instance")._renderItem = function (ul, item) {
                     return $("<li>")
-                        .append("<div>" + item.name + "</div>")
+                        .append("<div>" + item.name + " " + (item.details ? item.details : '') + "</div>")
                         .appendTo(ul);
                 };
             });

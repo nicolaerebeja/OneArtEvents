@@ -21,7 +21,10 @@ class User(db.Model, UserMixin):
     poza = db.Column(db.String(150), nullable=True)
 
     # relationship
-    repetitii = db.relationship('Repetitii', backref='user_repetitii', lazy=True)
+    repetitii = db.relationship('Repetitii', backref='user_repetitii', lazy=True, overlaps="repetitii,user_repetitii")
+    concedii = db.relationship('Concedii', backref='user_concedii', lazy=True, overlaps="concedii,user_concedii")
+    # repetitii_user = db.relationship('Repetitii', backref='user_repetitii', lazy=True, overlaps="repetitii,user_repetitii")
+    # concedii_user = db.relationship('Concedii', backref='user_concedii', lazy=True, overlaps="concedii,user_concedii")
 
 class ServiceProvider(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,4 +80,17 @@ class Repetitii(db.Model):
     detalii = db.Column(db.Text, nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref='repetitii_user', lazy=True, foreign_keys=[user_id])
+    # user = db.relationship('User', backref='repetitii_user', lazy=True, foreign_keys=[user_id])
+    user = db.relationship('User', backref='repetitii_user', lazy=True, overlaps="user_repetitii,user", foreign_keys=[user_id])
+
+
+
+class Concedii(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    detalii = db.Column(db.Text, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # user = db.relationship('User', backref='concedii_user', lazy=True, foreign_keys=[user_id])
+    user = db.relationship('User', backref='concedii_user', lazy=True, overlaps="user_concedii,user", foreign_keys=[user_id])
+

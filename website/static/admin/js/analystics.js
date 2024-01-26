@@ -34,6 +34,7 @@ function countStatisticiGenerale(anulSelectat) {
 countEventsMonthByYear(2024)
 
 var chartCountEventsMonthUpdateChart
+var chartCountEventsMonthUpdatePie
 var chartCountEventsMonthUpdateLineChart
 
 function extrageAnul(element) {
@@ -41,6 +42,7 @@ function extrageAnul(element) {
     $('#statisticiPePeriaoada > span').text(anul)
 
     chartCountEventsMonthUpdateChart.destroy();
+    chartCountEventsMonthUpdatePie.destroy();
     chartCountEventsMonthUpdateLineChart.destroy();
 
     countEventsMonthByYear(anul)
@@ -52,6 +54,7 @@ function countEventsMonthByYear(anulSelectat) {
         .then(data => {
             // Aici ai acces la date sub formă de obiect JSON
             countEventsMonthUpdateChart(data);
+            countEventsMonthUpdatePie(data);
 
             const cumulativeData = {};
             let totalEvents = 0;
@@ -67,17 +70,52 @@ function countEventsMonthByYear(anulSelectat) {
         .catch(error => console.error('Error fetching data:', error));
 }
 
+var backgroundColors
+
+function generateRandomColor() {
+    var baseColor = 100; // Nuanța de roșu închis de pornire (0-255)
+    var variation = 30; // Variația pentru a obține nuanțe diferite
+
+    // Generare aleatoare a nuanței de roșu închis
+    var red = baseColor + Math.floor(Math.random() * variation);
+    var green = Math.floor(Math.random() * variation);
+    var blue = Math.floor(Math.random() * variation);
+
+    return `rgb(${red},${green},${blue})`;
+}
+
+var monthMapping = {
+    1: 'ianuarie',
+    2: 'februarie',
+    3: 'martie',
+    4: 'aprilie',
+    5: 'mai',
+    6: 'iunie',
+    7: 'iulie',
+    8: 'august',
+    9: 'septembrie',
+    10: 'octombrie',
+    11: 'noiembrie',
+    12: 'decembrie'
+};
+
+
 function countEventsMonthUpdateChart(data) {
+    backgroundColors = Object.keys(data).map(function () {
+        return generateRandomColor();
+    });
     var ctx = document.getElementById('evenimenteXluna').getContext('2d');
     chartCountEventsMonthUpdateChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Object.keys(data),  // Cheile (lunile) vor fi etichetele barelor
+            labels: Object.keys(data).map(function (key) {
+                return monthMapping[key];
+            }),
             datasets: [{
                 label: 'Număr evenimente pe lună',
                 data: Object.values(data),  // Valorile vor fi înălțimile barelor
-                backgroundColor: 'rgba(203,10,10,0.57)',
-                borderColor: 'rgb(255,0,0)',
+                backgroundColor: backgroundColors,
+                borderColor: backgroundColors,
                 borderWidth: 1
             }]
         },
@@ -93,6 +131,29 @@ function countEventsMonthUpdateChart(data) {
             }
         },
     });
+}
+
+function countEventsMonthUpdatePie(data) {
+    backgroundColors = Object.keys(data).map(function () {
+        return generateRandomColor();
+    });
+    var ctx = document.getElementById('evenimenteXlunaPie').getContext('2d');
+
+    chartCountEventsMonthUpdatePie = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data).map(function (key) {
+                    return monthMapping[key];
+                }),
+                datasets: [{
+                    label: 'Număr evenimente pe lună',
+                    data: Object.values(data),
+                    backgroundColor: backgroundColors,
+                }]
+            },
+        }
+    )
+    ;
 }
 
 function countEventsMonthUpdateLineChart(data) {
@@ -209,14 +270,14 @@ var options = {
 };
 
 // Obține contextul canvasului
-var ctx = document.getElementById('pie-chart').getContext('2d');
-
-// Creează pie chart
-var pieChart = new Chart(ctx, {
-    type: 'pie',
-    data: data,
-    options: options
-});
+// var ctx = document.getElementById('pie-chart').getContext('2d');
+//
+// // Creează pie chart
+// var pieChart = new Chart(ctx, {
+//     type: 'pie',
+//     data: data,
+//     options: options
+// });
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {

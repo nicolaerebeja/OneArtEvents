@@ -3,6 +3,7 @@ from flask import Blueprint
 from .controllers.admin.AdminHomeController import adminHome
 from .controllers.admin.PrestatoriController import prestatori, getAllPrestatori, adaugaPrestator
 from .controllers.admin.RepetitiiController import absenteRepetitii, getAllRepetitiiLipsa, adaugaLipsaRepetitii
+from .controllers.admin.ConcediiController import concedii, getAllConcedii, adaugaConcediu
 from .controllers.admin.UserController import userIndex, profilDansator, userUpdate, upload_image
 
 from .controllers.admin.eventsController import eventsIndex, adaugaEveniment, getEvents, modificaDetaliiEveniment, \
@@ -51,4 +52,7 @@ views.route('/absente-repetitii', methods=['GET'])(absenteRepetitii)
 views.route('/getAllRepetitiiLipsa', methods=['GET'])(getAllRepetitiiLipsa)
 views.route('/adaugaLipsaRepetitii', methods=['POST'])(adaugaLipsaRepetitii)
 
+views.route('/concedii', methods=['GET'])(concedii)
+views.route('/getAllConcedii', methods=['GET'])(getAllConcedii)
+views.route('/adaugaConcediu', methods=['POST'])(adaugaConcediu)
 

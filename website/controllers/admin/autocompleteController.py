@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 from urllib.parse import unquote
 from flask import jsonify
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
 from flask import request, flash, render_template, jsonify, redirect, url_for
 from flask_login import current_user, login_required
 
-from website.models import db, Location, User, Event, ServiceProvider
+from website.models import db, Location, User, Event, ServiceProvider, Concedii
 
 
 @login_required
@@ -66,14 +66,15 @@ def getDancers():
     # Găsește toate evenimentele pentru data specificată
     events = Event.query.filter_by(date=date).all()
 
+    # Cauta concedii
+    concedii = Concedii.query.filter_by(data=date+" 00:00:00.000000").all()
+
     eventDancers = []
 
     for event in events:
         eventDancers += event.dancers.split(',')
-    print(eventDancers)
     if eventDancers:
         dancers = User.query.filter(User.first_name.notin_(eventDancers)).all()
-        print(dancers)
     else:
         dancers = User.query.all()
 
@@ -83,11 +84,19 @@ def getDancers():
             'id': dancer.id,
             'name': dancer.first_name,
         }
-        for dancer in dancers
+        for dancer in dancers if not is_in_concedii(dancer, concedii)
     ]
 
     return jsonify(dancers_json)
 
+def is_in_concedii(dancer, concedii):
+    """
+    Verifică dacă un dansator este în concedii.
+    """
+    for concediu in concedii:
+        if concediu.user_id == dancer.id:
+            return True
+    return False
 
 @login_required
 def get_event_counts():

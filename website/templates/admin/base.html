@@ -79,18 +79,18 @@
 
     </style>
 
-<style>
-            @media (max-width: 767px) {
+    <style>
+        @media (max-width: 767px) {
 
-    .row {
-        flex-direction: column;
-    }
+            .row {
+                flex-direction: column;
+            }
 
-    .col-4, .col-2 {
-        width: 100%;
-    }
-}
-</style>
+            .col-4, .col-2 {
+                width: 100%;
+            }
+        }
+    </style>
 
 
     {% block style %} {% endblock %}
@@ -99,19 +99,19 @@
 
 <body class="g-sidenav-show  bg-gray-200 dark-version">
 
-<div class="action" onclick="actionToggle();">
-
-    <span>+</span>
-
-    <ul>
-
-      <li> <a href="javascript:;" class="evenimentNou"><i class="material-icons opacity-10">format_list_bulleted</i></a>Eveniment Nou</li>
-      <li> <a href="javascript:;" class="prestatorNou"><i class="material-icons opacity-10">coronavirus</i></a>Prestator Nou</li>
-      <li> <a href="javascript:;" class="dansatorNou"><i class="material-icons opacity-10">groups</i></a>Dansator Nou</li>
-
-    </ul>
-
-  </div>
+{#<div class="action" onclick="actionToggle();">#}
+{#    <span>+</span>#}
+{#    <ul>#}
+{#        <li><a href="javascript:;" class="evenimentNou"><i#}
+{#                class="material-icons opacity-10">format_list_bulleted</i></a>Eveniment Nou#}
+{#        </li>#}
+{#        <li><a href="javascript:;" class="prestatorNou"><i class="material-icons opacity-10">coronavirus</i></a>Prestator#}
+{#            Nou#}
+{#        </li>#}
+{#        <li><a href="javascript:;" class="dansatorNou"><i class="material-icons opacity-10">groups</i></a>Dansator Nou#}
+{#        </li>#}
+{#    </ul>#}
+{#</div>#}
 
 <aside
         class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark ps ps--active-y"
@@ -197,6 +197,15 @@
                         <i class="material-icons opacity-10">directions_run</i>
                     </div>
                     <span class="nav-link-text ms-1">Absente Repetitii</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {% if request.path.startswith('/concedii') %}active bg-gradient-warning{% endif %}"
+                   href="/concedii">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">directions_run</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Concedii</span>
                 </a>
             </li>
             <hr class="horizontal light mt-0 mb-2">
